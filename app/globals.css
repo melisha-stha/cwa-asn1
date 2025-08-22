@@ -24,3 +24,45 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Dark mode overrides for Bootstrap breadcrumbs */
+body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item,
+body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item {
+  color: #ffffff !important;
+}
+
+body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a,
+body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover,
+body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
+  color: #0d6efd !important;
+}
+
+/* Light mode hover state for breadcrumb links */
+body.bg-light nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover,
+body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
+  color: #66b2ff !important; /* lighter blue */
+}
+
+body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: #ffffff !important;
+}
+
+body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item.active,
+body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item.active {
+  color: #ffffff !important;
+}
+
+/* Prefer overriding Bootstrap breadcrumb CSS variables in dark mode */
+body.bg-dark .breadcrumb,
+body.text-white .breadcrumb {
+  --bs-breadcrumb-item-color: #ffffff;
+  --bs-breadcrumb-item-hover-color: #ffffff;
+  --bs-breadcrumb-item-active-color: #ffffff;
+  --bs-breadcrumb-divider-color: #ffffff;
+}
