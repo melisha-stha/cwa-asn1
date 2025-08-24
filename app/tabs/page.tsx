@@ -16,7 +16,6 @@ export default function TabsPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [generatedOutput, setGeneratedOutput] = useState('');
 
-  // Load tabs from localStorage on component mount
   useEffect(() => {
     try {
       const savedTabs = localStorage.getItem('tabs');
@@ -42,7 +41,6 @@ export default function TabsPage() {
     }
   }, []);
 
-  // Save tabs to localStorage whenever tabs or activeTab changes (only after initial load)
   useEffect(() => {
     if (isLoaded) {
       try {
@@ -63,7 +61,7 @@ export default function TabsPage() {
         content: `This is the content for Tab ${tabs.length + 1}.`
       };
       setTabs([...tabs, newTab]);
-      setActiveTab(newId); // Switch to the new tab
+      setActiveTab(newId);
     }
   };
 
@@ -72,7 +70,6 @@ export default function TabsPage() {
       const newTabs = tabs.filter(tab => tab.id !== tabId);
       setTabs(newTabs);
       
-      // If we're removing the active tab, switch to the first tab
       if (activeTab === tabId) {
         setActiveTab(newTabs[0].id);
       }
@@ -151,7 +148,6 @@ export default function TabsPage() {
         const tabs = ${JSON.stringify(tabs)};
 
         function switchTab(tabId) {
-            // Remove active class from all tabs and contents
             const allTabs = document.querySelectorAll('[onclick*="switchTab"]');
             const allContents = document.querySelectorAll('[id^="content-"]');
             
@@ -161,7 +157,6 @@ export default function TabsPage() {
             });
             allContents.forEach(item => item.style.display = 'none');
             
-            // Add active class to selected tab and content
             const selectedTab = document.querySelector(\`[onclick*="switchTab(\${tabId})"]\`);
             const selectedContent = document.getElementById(\`content-\${tabId}\`);
             
@@ -179,7 +174,6 @@ export default function TabsPage() {
         function removeTab(tabId) {
             if (tabs.length <= 1) return;
             
-            // Remove tab from DOM
             const tabElement = document.querySelector(\`[onclick*="switchTab(\${tabId})"]\`);
             const contentElement = document.getElementById(\`content-\${tabId}\`);
             
@@ -187,7 +181,6 @@ export default function TabsPage() {
                 tabElement.remove();
                 contentElement.remove();
                 
-                // If removed tab was active, switch to first remaining tab
                 if (currentTab === tabId) {
                     const firstTab = document.querySelector('[onclick*="switchTab"]');
                     if (firstTab) {
@@ -198,7 +191,6 @@ export default function TabsPage() {
             }
         }
 
-        // Add hover effects
         document.addEventListener('DOMContentLoaded', function() {
             const allTabs = document.querySelectorAll('[onclick*="switchTab"]');
             allTabs.forEach(tab => {
@@ -253,7 +245,6 @@ export default function TabsPage() {
       </div>
       
       <div className="row">
-        {/* Vertical Tab Navigation - Left Side */}
         <div className="col-md-3">
           <h6 className="mb-2">Tabs</h6>
           <div className="border rounded">
@@ -306,7 +297,6 @@ export default function TabsPage() {
           </div>
         </div>
 
-        {/* Tab Content - Center */}
         <div className="col-md-4">
           <h6 className="mb-2">Tabs Content</h6>
           <div className="border rounded p-3" style={{ minHeight: '400px', maxHeight: '500px', overflowY: 'auto' }}>
@@ -343,7 +333,6 @@ export default function TabsPage() {
           </div>
         </div>
 
-        {/* Output Section - Right Side */}
         <div className="col-md-5">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <h6 className="mb-0">Output</h6>
