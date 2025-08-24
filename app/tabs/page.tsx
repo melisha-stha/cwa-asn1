@@ -14,6 +14,7 @@ export default function TabsPage() {
   const [editTitleValue, setEditTitleValue] = useState('');
   const [editContentValue, setEditContentValue] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [generatedOutput, setGeneratedOutput] = useState('');
 
   // Load tabs from localStorage on component mount
   useEffect(() => {
@@ -117,17 +118,138 @@ export default function TabsPage() {
     }
   };
 
+  const generateOutput = () => {
+    const htmlOutput = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Tabs</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h1>Generated Tabs</h1>
+        <div style="display: flex; gap: 20px;">
+            <div style="width: 250px; background: white; border: 1px solid #dee2e6; border-radius: 5px; overflow: hidden;">
+                ${tabs.map((tab, index) => `
+                <div style="padding: 10px 15px; border-bottom: 1px solid #dee2e6; cursor: pointer; transition: background-color 0.2s; ${index === 0 ? 'background-color: #007bff; color: white;' : ''}" onclick="switchTab(${tab.id})">
+                    ${tab.title}
+                    ${tabs.length > 1 ? `<button style="float: right; background: none; border: none; color: ${index === 0 ? 'white' : '#6c757d'}; cursor: pointer; font-size: 16px; padding: 0 5px;" onmouseover="this.style.color='#dc3545'" onmouseout="this.style.color='${index === 0 ? 'white' : '#6c757d'}'" onclick="removeTab(${tab.id}); event.stopPropagation();">×</button>` : ''}
+                </div>`).join('')}
+            </div>
+            <div style="flex: 1; background: white; border: 1px solid #dee2e6; border-radius: 5px; padding: 20px; min-height: 300px;">
+                ${tabs.map((tab, index) => `
+                <div style="display: ${index === 0 ? 'block' : 'none'};" id="content-${tab.id}">
+                    ${tab.content.replace(/\n/g, '<br>')}
+                </div>`).join('')}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = ${tabs[0]?.id || 0};
+        const tabs = ${JSON.stringify(tabs)};
+
+        function switchTab(tabId) {
+            // Remove active class from all tabs and contents
+            const allTabs = document.querySelectorAll('[onclick*="switchTab"]');
+            const allContents = document.querySelectorAll('[id^="content-"]');
+            
+            allTabs.forEach(item => {
+                item.style.backgroundColor = '';
+                item.style.color = '';
+            });
+            allContents.forEach(item => item.style.display = 'none');
+            
+            // Add active class to selected tab and content
+            const selectedTab = document.querySelector(\`[onclick*="switchTab(\${tabId})"]\`);
+            const selectedContent = document.getElementById(\`content-\${tabId}\`);
+            
+            if (selectedTab) {
+                selectedTab.style.backgroundColor = '#007bff';
+                selectedTab.style.color = 'white';
+            }
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+            }
+            
+            currentTab = tabId;
+        }
+
+        function removeTab(tabId) {
+            if (tabs.length <= 1) return;
+            
+            // Remove tab from DOM
+            const tabElement = document.querySelector(\`[onclick*="switchTab(\${tabId})"]\`);
+            const contentElement = document.getElementById(\`content-\${tabId}\`);
+            
+            if (tabElement && contentElement) {
+                tabElement.remove();
+                contentElement.remove();
+                
+                // If removed tab was active, switch to first remaining tab
+                if (currentTab === tabId) {
+                    const firstTab = document.querySelector('[onclick*="switchTab"]');
+                    if (firstTab) {
+                        const firstTabId = parseInt(firstTab.getAttribute('onclick').match(/switchTab\\((\\d+)\\)/)[1]);
+                        switchTab(firstTabId);
+                    }
+                }
+            }
+        }
+
+        // Add hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const allTabs = document.querySelectorAll('[onclick*="switchTab"]');
+            allTabs.forEach(tab => {
+                tab.addEventListener('mouseenter', function() {
+                    if (this.style.backgroundColor !== 'rgb(0, 123, 255)') {
+                        this.style.backgroundColor = '#e9ecef';
+                    }
+                });
+                tab.addEventListener('mouseleave', function() {
+                    if (this.style.backgroundColor !== 'rgb(0, 123, 255)') {
+                        this.style.backgroundColor = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>`;
+
+    setGeneratedOutput(htmlOutput);
+  };
+
+  const copyToClipboard = () => {
+    if (generatedOutput) {
+      navigator.clipboard.writeText(generatedOutput).then(() => {
+        alert('HTML code copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    }
+  };
+
   return (
     <main className="container-fluid mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1>Tabs Page</h1>
-        <button 
-          className="btn btn-primary" 
-          onClick={addTab}
-          disabled={tabs.length >= 15}
-        >
-          Add Tab ({tabs.length}/15)
-        </button>
+        <div className="d-flex gap-2">
+          <button 
+            className="btn btn-primary" 
+            onClick={addTab}
+            disabled={tabs.length >= 15}
+          >
+            Add Tab ({tabs.length}/15)
+          </button>
+          <button 
+            className="btn btn-success" 
+            onClick={generateOutput}
+          >
+            Output
+          </button>
+        </div>
       </div>
       
       <div className="row">
@@ -184,32 +306,63 @@ export default function TabsPage() {
           </div>
         </div>
 
-        {/* Tab Content - Right Side */}
-        <div className="col-md-9">
+        {/* Tab Content - Center */}
+        <div className="col-md-4">
           <h6 className="mb-2">Tabs Content</h6>
-          <div className="border rounded p-3" style={{ minHeight: '200px', maxHeight: '300px', overflowY: 'auto' }}>
+          <div className="border rounded p-3" style={{ minHeight: '400px', maxHeight: '500px', overflowY: 'auto' }}>
             {editingContent === activeTab ? (
               <textarea
                 value={editContentValue}
                 onChange={(e) => setEditContentValue(e.target.value)}
                 onBlur={() => saveContent(activeTab)}
                 onKeyDown={(e) => handleKeyPress(e, () => saveContent(activeTab))}
-                className="form-control h-100"
+                className="form-control"
                 autoFocus
-                style={{ resize: 'none' }}
+                style={{ 
+                  resize: 'none',
+                  height: '100%',
+                  minHeight: '350px',
+                  border: 'none',
+                  outline: 'none',
+                  boxShadow: 'none'
+                }}
               />
             ) : (
               <div 
                 onClick={() => startEditingContent(activeTab, tabs.find(tab => tab.id === activeTab)?.content || '')}
                 style={{ 
                   cursor: 'pointer', 
-                  minHeight: '100px',
+                  minHeight: '350px',
                   whiteSpace: 'pre-wrap'
                 }}
                 title="Click to edit content"
               >
                 {tabs.find(tab => tab.id === activeTab)?.content}
               </div>
+            )}
+          </div>
+        </div>
+
+        {/* Output Section - Right Side */}
+        <div className="col-md-5">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h6 className="mb-0">Output</h6>
+            {generatedOutput && (
+              <button 
+                className="btn btn-sm btn-primary"
+                onClick={copyToClipboard}
+              >
+                Copy HTML
+              </button>
+            )}
+          </div>
+          <div className="border rounded p-3 bg-light" style={{ minHeight: '400px', maxHeight: '500px', overflowY: 'auto' }}>
+            {generatedOutput ? (
+              <pre style={{ fontSize: '10px', whiteSpace: 'pre-wrap' }}>
+                {generatedOutput}
+              </pre>
+            ) : (
+              <p className="text-muted">Click "Output" button to generate HTML5 + JS with inline CSS...</p>
             )}
           </div>
         </div>
