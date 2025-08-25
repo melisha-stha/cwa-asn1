@@ -16,13 +16,18 @@ const Theme = () => {
   }, [darkMode]);
 
   return (
-    <button
-    className={`btn ${darkMode ? "btn-light" : "btn-dark"} px-4 py-2 text-nowrap`}
-    style={{ minWidth: "120px" }}
-    onClick={() => setDarkMode(!darkMode)}
-    >
-    {darkMode ? "Light Mode" : "Dark Mode"}
-    </button>
+    <div className="form-check form-switch">
+      <input
+        className="form-check-input"
+        type="checkbox"
+        id="themeToggle"
+        checked={darkMode}
+        onChange={() => setDarkMode(!darkMode)}
+      />
+      <label className="form-check-label" htmlFor="themeToggle">
+        {darkMode ? "Light" : "Dark"}
+      </label>
+    </div>
   );
 };
 
