@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import HamburgerMenu from "./components/hamburgerMenu";
 import Breadcrumbs from "./components/breadcrumbs";
-
+import Theme from "./components/theme";
 
 export const metadata: Metadata = {
   title: "CSE3CWA",
@@ -51,14 +51,16 @@ export default function RootLayout({
 
             <div className="d-flex align-items-center gap-3">
               <a className="nav-link text-dark link-primary" href="/about">About</a>
-              <HamburgerMenu />             
+              <HamburgerMenu /> 
+              
             </div>
           </div>
         </nav>
-
+        
         <div className="container my-2">
           <div className="d-flex justify-content-between align-items-center">
             <Breadcrumbs />
+            <Theme />
           </div>
         </div>
 
