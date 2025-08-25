@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css"; 
+import "./globals.css";
 import HamburgerMenu from "./components/hamburgerMenu";
 import Breadcrumbs from "./components/breadcrumbs";
-import Theme from "./components/theme";
+import Theme from "./components/theme"
 
 export const metadata: Metadata = {
   title: "CSE3CWA",
