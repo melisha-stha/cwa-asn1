@@ -1,0 +1,78 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hamburger bars */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+.open1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.open2 {
+  opacity: 0;
+}
+
+.open3 {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Menu closed */
+.menu {
+  display: none;
+}
+
+/* Dropdown box menu */
+.menuOpen {
+  display: block;
+  position: absolute;
+  top: 35px;               /* below hamburger */
+  right: 0;                /* align to right edge of hamburger */
+  width: 200px;            /* fixed width */
+  background-color: #f8f9fa; /* light gray box */
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.menuOpen ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuOpen li {
+  margin: 0;
+}
+
+.menuOpen a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #000;
+  transition: all 0.2s ease;
+  border-radius: 0.25rem;
+}
+
+.menuOpen a:hover {
+  color: #0d6efd;         /* Bootstrap blue */
+  background-color: #e9ecef; /* light gray hover */
+}

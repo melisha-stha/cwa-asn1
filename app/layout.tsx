@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"; 
+import HamburgerMenu from "./components/hamburgerMenu";
 
 export const metadata: Metadata = {
   title: "CSE3CWA",
@@ -47,7 +48,8 @@ export default function RootLayout({
             </ul>
 
             <div className="d-flex align-items-center gap-3">
-              <a className="nav-link text-dark link-primary" href="/about">About</a>              
+              <a className="nav-link text-dark link-primary" href="/about">About</a>
+              <HamburgerMenu />             
             </div>
           </div>
         </nav>
@@ -55,7 +57,7 @@ export default function RootLayout({
         {children}
 
         <footer className="bg-secondary text-white text-center py-3">
-          <p>Copyright © 2025 Melisha Shrestha 21923855 August 27 2025</p>
+          <p>Copyright © 2025 | Melisha Shrestha 21923855 | August 27 2025 |</p>
         </footer>
 
       </body>
