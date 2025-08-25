@@ -21,10 +21,10 @@ const HamburgerMenu = () => {
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/about">About</a></li>
-          <li><a href="#">Tabs</a></li>
-          <li><a href="#">Pre-lab Questions</a></li>
-          <li><a href="#">Escape Room</a></li>
-          <li><a href="#">Coding Races</a></li>
+          <li><a href="/tabs">Tabs</a></li>
+          <li><a href="/prelab-qns">Pre-lab Questions</a></li>
+          <li><a href="/escape-room">Escape Room</a></li>
+          <li><a href="/coding-races">Coding Races</a></li>
         </ul>
       </nav>
     </div>

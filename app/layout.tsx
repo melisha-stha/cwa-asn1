@@ -1,5 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import HamburgerMenu from "./components/hamburgerMenu";
+import Breadcrumbs from "./components/breadcrumbs";
+
 
 export const metadata: Metadata = {
   title: "CSE3CWA",
@@ -34,16 +36,16 @@ export default function RootLayout({
                 <a className="nav-link text-dark link-primary" href="/">Home</a>
               </li>
               <li className="nav-item me-3">
-                <a className="nav-link text-dark link-primary" href="#">Tabs</a>
+                <a className="nav-link text-dark link-primary" href="/tabs">Tabs</a>
               </li>
               <li className="nav-item me-3">
-                <a className="nav-link text-dark link-primary" href="#">Pre-lab Questions</a>
+                <a className="nav-link text-dark link-primary" href="/prelab-qns">Pre-lab Questions</a>
               </li>
               <li className="nav-item me-3">
-                <a className="nav-link text-dark link-primary" href="#">Escape Room</a>
+                <a className="nav-link text-dark link-primary" href="/escape-room">Escape Room</a>
               </li>
               <li className="nav-item me-3">
-                <a className="nav-link text-dark link-primary" href="#">Coding Races</a>
+                <a className="nav-link text-dark link-primary" href="/coding-races">Coding Races</a>
               </li>
             </ul>
 
@@ -53,6 +55,12 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
+
+        <div className="container my-2">
+          <div className="d-flex justify-content-between align-items-center">
+            <Breadcrumbs />
+          </div>
+        </div>
 
         {children}
 
