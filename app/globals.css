@@ -48,6 +48,8 @@ body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover
   color: #66b2ff !important; /* lighter blue */
 }
 
+
+
 body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
 body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   color: #ffffff !important;
