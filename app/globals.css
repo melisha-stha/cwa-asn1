@@ -25,7 +25,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Dark mode overrides for Bootstrap breadcrumbs */
 body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item,
 body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item {
   color: #ffffff !important;
@@ -42,13 +41,11 @@ body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hove
   color: #0d6efd !important;
 }
 
-/* Light mode hover state for breadcrumb links */
 body.bg-light nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover,
 body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
-  color: #66b2ff !important; /* lighter blue */
+  color: #66b2ff !important;
 }
 
-/* Tab styling */
 .nav-tabs .nav-link {
   color: #000000 !important;
 }
@@ -61,12 +58,10 @@ body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover
   color: #0d6efd !important;
 }
 
-/* Tab borders */
 .nav-tabs .nav-item:not(:last-child) {
   border-right: 1px solid #dee2e6;
 }
 
-/* Remove default border from × button */
 .nav-tabs .btn-outline-danger {
   border: none !important;
   background: transparent !important;
@@ -87,8 +82,6 @@ body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover
   box-shadow: none !important;
 }
 
-
-
 body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
 body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   color: #ffffff !important;
@@ -99,7 +92,35 @@ body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item.active
   color: #ffffff !important;
 }
 
-/* Prefer overriding Bootstrap breadcrumb CSS variables in dark mode */
+body.bg-dark .bg-light,
+body.text-white .bg-light {
+  background-color: #f8f9fa !important;
+}
+
+body.bg-dark .bg-light pre,
+body.text-white .bg-light pre,
+body.bg-dark .bg-light p,
+body.text-white .bg-light p {
+  color: #000000 !important;
+}
+
+body.bg-dark pre,
+body.text-white pre {
+  color: #000000 !important;
+}
+
+body.bg-dark .text-muted,
+body.text-white .text-muted {
+  color: #6c757d !important;
+}
+
+body.bg-dark .border.rounded.p-3.bg-light pre,
+body.text-white .border.rounded.p-3.bg-light pre,
+body.bg-dark .border.rounded.p-3.bg-light p,
+body.text-white .border.rounded.p-3.bg-light p {
+  color: #000000 !important;
+}
+
 body.bg-dark .breadcrumb,
 body.text-white .breadcrumb {
   --bs-breadcrumb-item-color: #ffffff;
