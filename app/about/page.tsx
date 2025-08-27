@@ -13,20 +13,10 @@ export default function About() {
         <p>Student ID: 21923855</p>
   
         <h2>Video</h2>
-        <div
-          style={{
-            width: "600px",
-            height: "340px",
-            border: "2px dashed gray",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "10px",
-            backgroundColor: "#f8f9fa",
-          }}
-        >
-          <p>Video Placeholder</p>
+        <div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/VmFeDeiswhQ?si=pS9pB3bEgxbDZvPr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
       </main>
     );
   }
