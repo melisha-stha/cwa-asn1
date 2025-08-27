@@ -115,6 +115,7 @@ export default function TabsPage() {
     }
   };
 
+  //The generateOutput() function was developed with help from ChatGPT.
   const generateOutput = () => {
     const htmlOutput = `<!DOCTYPE html>
 <html lang="en">
