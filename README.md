@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+**CSE3CWA Assignment 1  
+Student: Melisha Shrestha (21923855)  
+Course: CSE3CWA Assignment 1 - NextJS Web Application**
 
-## Getting Started
+## Overview
+A Next.js web application that generates HTML5 + JavaScript code for MOODLE LMS deployment. Features a tab management system with code generation capabilities.
 
-First, run the development server:
+## Features 
+- **Pages:** Home, About, Tabs, Escape Room, Coding Races, Pre-lab Questions  
+- **Navigation:** Header with student number, hamburger menu, breadcrumbs  
+- **Theme Toggle:** Dark/Light mode switching  
+- **Tab System:** Add/edit/remove tabs with content management  
+- **Code Generation:** Outputs HTML5 + JS + inline CSS  
+- **Accessibility:** Following accessibility standards  
+- **Cookies:** Remembers navigation history and preferences  
 
+## Technology Stack 
+- Next.js 14+ with TypeScript  
+- Bootstrap 5  
+- localStorage for tab persistence  
+- Cookies for navigation state  
+
+## Installation and Setup  
+1. **Clone and install**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd cse3cwa-assignment1
+npm install
+npm install bootstrap
 ```
+2. **Run development server**  
+`npm run dev`
+3. **Open browser**  
+`http://localhost:3000`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Main Functionality  
+**Tabs Page**  
+- Add up to 15 tabs
+- Edit tab titles and content inline
+- Generate complete HTML5 code
+- Copy generated code to clipboard
+- Persistent storage across sessions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Video Walkthrough  
+A video demonstration showing how the website works, including:  
+- Navigating through the application and its features  
+- Code generation functionality  
+- Theme switching and responsive design  
+- Accessibility features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Support  
+For questions or issues related to this assignment, please contact *21923855@students.ltu.edu.au*
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License  
+This project is created by Melisha Shrestha - 21923855 for educational purposes as part of CSE3CWA coursework at La Trobe University.
