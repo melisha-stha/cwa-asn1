@@ -1,3 +1,5 @@
+// This HamburgerMenu component is adapted from the Week 3 CSE3CWA lab example.
+
 'use client'
 import { useState } from 'react';
 import styles from './hamburgerMenu.module.css';

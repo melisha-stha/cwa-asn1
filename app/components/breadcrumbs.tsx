@@ -1,3 +1,5 @@
+// Breadcrumbs component created with assistance from ChatGPT
+
 'use client';
 
 import Link from 'next/link';
