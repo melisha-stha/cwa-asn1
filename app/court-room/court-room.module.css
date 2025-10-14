@@ -1,0 +1,30 @@
+.container {
+  background-image: url('/court-room-bg.jpg'); 
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; 
+  color: white; 
+  padding: 20px;
+}
+
+.gameArea {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+  background-color: rgba(0, 0, 0, 0.7); 
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.codeArea, .messageBox {
+  flex: 1; 
+  min-height: 400px;
+  border: 1px solid red; 
+  padding: 15px;
+  background-color: #222;
+}
+
+.messageBox h3 {
+    color: yellow;
+    border-bottom: 1px solid yellow;
+}

@@ -44,7 +44,7 @@ export default function RootLayout({
                 <a className="nav-link text-dark link-primary" href="/prelab-qns">Pre-lab Questions</a>
               </li>
               <li className="nav-item me-3">
-                <a className="nav-link text-dark link-primary" href="/escape-room">Escape Room</a>
+                <a className="nav-link text-dark link-primary" href="/court-room">Court Room</a>
               </li>
               <li className="nav-item me-3">
                 <a className="nav-link text-dark link-primary" href="/coding-races">Coding Races</a>
