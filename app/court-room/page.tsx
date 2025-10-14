@@ -1,126 +1,219 @@
 "use client";
-import React, { useState, useEffect, useCallback } from 'react';
-import styles from './court-room.module.css'; 
-import { GAME_MESSAGES, Message } from './messages'; // Import our messages
 
-const initialGameTime = 5 * 60; // 5 minutes in seconds
+import React, { useState, useEffect } from 'react';
+import styles from './court-room.module.css';
+import { GAME_MESSAGES, Message } from './messages';
+
+const initialGameTime = 5 * 60;
+
+const initialProblemCode = `
+<div style="border:1px solid black; padding:10px;">
+  <h3 style="color:blue;">User Profile</h3>
+  
+  <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
+
+  <label style="display:block; margin-top:10px;">Username:</label>
+  <input type="text" id="username" value="user123" style="border:1px solid #ccc;">
+
+  <label style="display:block; margin-top:10px;">Email:</label>
+  <input type="text" id="email" value="bad-email" style="border:1px solid #ccc;">
+
+  <button onclick="saveData()" style="background-color:gray; color:white; padding:5px 10px;">Save</button>
+</div>
+
+<script>
+  function saveData() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    
+    console.log('Saving data to insecure database...'); 
+    
+    alert('Data saved (but maybe not securely or legally!)');
+  }
+</script>
+`.trim();
+
 
 const CourtRoomPage: React.FC = () => {
-  // State for the timer
-  const [timeRemaining, setTimeRemaining] = useState(initialGameTime);
-  const [isRunning, setIsRunning] = useState(false);
-  
-  // State for messages
-  const [currentMessages, setCurrentMessages] = useState<Message[]>([]);
-  const [penalties, setPenalties] = useState<string[]>([]); // To track penalties
+    const [timeRemaining, setTimeRemaining] = useState(initialGameTime);
+    const [isRunning, setIsRunning] = useState(false);
+    const [currentMessages, setCurrentMessages] = useState<Message[]>([]);
+    const [penalties, setPenalties] = useState<string[]>([]);
+    const [userCode, setUserCode] = useState(initialProblemCode);
+    const [generatedOutput, setGeneratedOutput] = useState('');
 
-  // --- TIMER LOGIC (Modified from Step 2) ---
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
 
-    if (isRunning && timeRemaining > 0) {
-      intervalId = setInterval(() => {
-        setTimeRemaining((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (timeRemaining === 0) {
-      clearInterval(intervalId);
-      setIsRunning(false);
-      alert("Time's up! Game Over."); 
-    }
+    const formatTime = (totalSeconds: number) => {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    };
 
-    return () => clearInterval(intervalId);
-  }, [isRunning, timeRemaining]);
-  
-  // Function to format seconds (re-used from Step 2)
-  const formatTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  };
+    const isFixApplied = (penaltyKey: Message['penaltyKey']): boolean => {
+        if (!userCode) return false;
 
-  const toggleTimer = () => setIsRunning(!isRunning);
-  const resetGame = () => {
-    setTimeRemaining(initialGameTime);
-    setIsRunning(false);
-    setCurrentMessages([]);
-    setPenalties([]);
-  };
-  
-  // --- MESSAGE LOGIC ---
-  useEffect(() => {
-    if (!isRunning) return;
+        switch (penaltyKey) {
+            case 'DisabilityAct':
+                return /<img[^>]*alt=["'][^"']*["'][^>]*>/i.test(userCode);
+                
+            case 'LawsOfTort_Validation':
+                // FIX APPLIED HERE: Using double quotes for the outer string
+                return userCode.includes("if (!email.includes('@'))");
+                
+            case 'LawsOfTort_Database':
+                return userCode.includes('secure database') && !userCode.includes('insecure database');
+            
+            case 'Bankruptcy':
+                return userCode.includes('secure database') && userCode.includes('LawsOfTort');
 
-    // Calculate elapsed time (how many seconds have passed)
-    const elapsedTime = initialGameTime - timeRemaining;
-    
-    // Check if any message should be triggered now
-    GAME_MESSAGES.forEach(msg => {
-      // Check if the message's ID (trigger time) matches the elapsed time
-      // and if it hasn't been shown already
-      if (elapsedTime === msg.id && !currentMessages.find(m => m.id === msg.id)) {
-        setCurrentMessages(prev => [...prev, msg]);
-      }
-
-      // Check for escalation/penalty (e.g., if ignored for 2 minutes/120 seconds)
-      if (msg.isCritical && elapsedTime === msg.id + 120) {
-        // In a real game, you'd check if the user completed the fix here.
-        // For simplicity, we assume they haven't fixed it for now.
-        const penaltyText = `PENALTY! Court Room appears for ignoring ${msg.penaltyKey} issue!`;
-        if (!penalties.includes(penaltyText)) {
-            setPenalties(prev => [...prev, penaltyText]);
-            alert(penaltyText); 
-            // NOTE: In the final version, you would deduct marks here 
+            default:
+                return false;
         }
-      }
-    });
-  // The effect depends on timeRemaining and isRunning
-  }, [timeRemaining, isRunning, currentMessages, penalties]); 
+    };
 
-  return (
-    <div className={styles.container}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>The Court Room Challenge</h1>
-        <p>Student No.</p>
-      </div>
+    const generateFinalCode = () => {
+        const finalHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE3CWA Generated Code</title>
+</head>
+<body>
+    
+${userCode}
+    
+    <script>
+        const altFixStatus = document.body.innerHTML.includes('alt="');
+        console.log('Alt Tag Accessibility Fix Status:', altFixStatus ? 'FIXED' : 'MISSING');
+    </script>
+</body>
+</html>
+        `.trim();
 
-      <div style={{ padding: '10px', border: '1px solid black', display: 'inline-block', marginBottom: '10px' }}>
-          <h2>Time Remaining: {formatTime(timeRemaining)}</h2>
-          <button onClick={toggleTimer}> {isRunning ? 'Pause' : 'Start'} </button>
-          <button onClick={resetGame} style={{ marginLeft: '10px' }}> Reset Game </button>
-      </div>
-      
-      {/* Display Penalties */}
-      {penalties.length > 0 && (
-          <div style={{ border: '2px solid red', padding: '10px', margin: '10px 0', backgroundColor: 'darkred' }}>
-              <h3>FINES/PENALTIES</h3>
-              {penalties.map((p, index) => <p key={index} style={{ margin: '5px 0' }}>🚨 {p}</p>)}
-          </div>
-      )}
-      
-      <div className={styles.gameArea}> 
-        <div className={styles.codeArea}>
-            <h2>The Debugging Task</h2>
-            <p>User is to debug code here.</p>
-            {/* The main debugging task will be here */}
-        </div>
+        setGeneratedOutput(finalHtml);
+    };
+
+
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout | undefined = undefined; 
+
+        if (isRunning && timeRemaining > 0) {
+            intervalId = setInterval(() => {
+                setTimeRemaining((prevTime) => prevTime - 1);
+            }, 1000);
+        } else if (timeRemaining === 0) {
+            setIsRunning(false);
+            alert("Time's up! Game Over."); 
+        }
+
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
+    }, [isRunning, timeRemaining]);
+
+
+    useEffect(() => {
+        if (!isRunning) return;
+
+        const elapsedTime = initialGameTime - timeRemaining;
         
-        <div className={styles.messageBox}>
-            <h3>Incoming Messages ({currentMessages.length})</h3>
-            {/* Display the latest message at the top */}
-            {currentMessages.slice().reverse().map((msg) => (
-                <div key={msg.id} style={{ borderBottom: '1px dashed #666', padding: '5px 0', color: msg.isCritical ? 'red' : 'white' }}>
-                    <strong>{msg.source}:</strong> {msg.text} 
+        GAME_MESSAGES.forEach(msg => {
+            if (elapsedTime === msg.id && !currentMessages.find(m => m.id === msg.id)) {
+                setCurrentMessages(prev => [...prev, msg]);
+            }
+
+            if (msg.isCritical && elapsedTime === msg.id + 120) {
+                const fixKey = msg.penaltyKey;
+
+                if (fixKey && !isFixApplied(fixKey)) {
+                    const penaltyText = `PENALTY! Court fine for ignoring ${fixKey} issue!`;
+                    
+                    if (!penalties.includes(penaltyText)) {
+                        setPenalties(prev => [...prev, penaltyText]);
+                        alert(penaltyText); 
+                    }
+                }
+            }
+        });
+    }, [timeRemaining, isRunning, currentMessages, penalties, userCode]);
+
+    const toggleTimer = () => setIsRunning(!isRunning);
+    const resetGame = () => {
+        setTimeRemaining(initialGameTime);
+        setIsRunning(false);
+        setCurrentMessages([]);
+        setPenalties([]);
+        setUserCode(initialProblemCode);
+        setGeneratedOutput('');
+    };
+
+    return (
+        <div className={styles.container}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h1>The Court Room Challenge</h1>
+                <p>Student No.</p>
+            </div>
+
+            <div style={{ padding: '10px', border: '1px solid black', display: 'inline-block', marginBottom: '10px' }}>
+                <h2>Time Remaining: {formatTime(timeRemaining)}</h2>
+                <button onClick={toggleTimer}> {isRunning ? 'Pause' : 'Start'} </button>
+                <button onClick={resetGame} style={{ marginLeft: '10px' }}> Reset Game </button>
+            </div>
+            
+            {penalties.length > 0 && (
+                <div style={{ border: '2px solid red', padding: '10px', margin: '10px 0', backgroundColor: 'darkred' }}>
+                    <h3>FINES/PENALTIES</h3>
+                    {penalties.map((p, index) => <p key={index} style={{ margin: '5px 0' }}>🚨 {p}</p>)}
                 </div>
-            ))}
+            )}
+            
+            <div className={styles.gameArea}> 
+                <div className={styles.codeArea}>
+                    <h2>The Debugging Task (Fix the issues!)</h2>
+                    <p>Edit the code below to fix the issues mentioned in the **RED** critical messages.</p>
+                    <textarea
+                        value={userCode}
+                        onChange={(e) => setUserCode(e.target.value)}
+                        style={{ width: '100%', minHeight: '300px', backgroundColor: '#1e1e1e', color: '#d4d4d4', fontFamily: 'monospace', padding: '10px' }}
+                    />
+                </div>
+                
+                <div className={styles.messageBox}>
+                    <h3>Incoming Messages ({currentMessages.length})</h3>
+                    {currentMessages.slice().reverse().map((msg) => (
+                        <div 
+                            key={msg.id} 
+                            style={{ 
+                                borderBottom: '1px dashed #666', 
+                                padding: '5px 0', 
+                                color: msg.isCritical ? 'red' : 'white',
+                                fontWeight: msg.isCritical ? 'bold' : 'normal'
+                            }}>
+                            <strong>{msg.source}:</strong> {msg.text} 
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
+            <button onClick={generateFinalCode} style={{ marginTop: '20px' }}>
+                Generate Code Output (Final Deliverable)
+            </button>
+            
+            <div style={{ marginTop: '10px', backgroundColor: '#333', padding: '10px', border: '1px solid #555' }}>
+                {generatedOutput ? (
+                    <pre style={{ color: 'lightgreen', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                        {generatedOutput}
+                    </pre>
+                ) : (
+                    <p>Click 'Generate Code Output' to see the final HTML5 + JS code.</p>
+                )}
+            </div>
         </div>
-      </div>
-      
-      <button style={{ marginTop: '20px' }}>Generate Code Output</button>
-      <div style={{ marginTop: '10px', backgroundColor: '#333', padding: '10px', border: '1px solid #555' }}>
-        <p>Generated HTML/JS Code Output Placeholder</p>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default CourtRoomPage;
