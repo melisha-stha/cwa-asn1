@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import styles from './hamburgerMenu.module.css';
 
+
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
