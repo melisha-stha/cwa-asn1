@@ -71,7 +71,7 @@ const CourtRoomPage: React.FC = () => {
         }
     };
 
-    const generateFinalCode = () => {
+    const generateFinalCode = async () => {
         const finalHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -93,9 +93,34 @@ ${userCode}
         `.trim();
 
         setGeneratedOutput(finalHtml);
+
+        // API Call to Save Data (The 8-mark deliverable)
+        const timeElapsed = initialGameTime - timeRemaining;
+
+        try {
+            const response = await fetch('/api/results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    generatedCode: finalHtml,
+                    penalties: penalties, 
+                    timeTaken: timeElapsed,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Success! Code and game result saved to database.');
+            } else {
+                alert('Warning: Failed to save result to database.');
+            }
+        } catch (error) {
+            console.error('Error saving result:', error);
+            alert('Error: Could not connect to database API.');
+        }
     };
-
-
+    
     useEffect(() => {
         let intervalId: NodeJS.Timeout | undefined = undefined; 
 
