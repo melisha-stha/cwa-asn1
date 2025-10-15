@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  cwa-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - NODE_ENV=production
