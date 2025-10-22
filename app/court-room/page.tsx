@@ -4,40 +4,38 @@ import React, { useState, useEffect } from 'react';
 import styles from './court-room.module.css';
 import { GAME_MESSAGES, Message } from './messages';
 
-// Define the state for the game's flow
 type GameState = 'welcome' | 'playing' | 'game_over';
 
-// Timer options in seconds and their associated difficulty/style
 const TIME_OPTIONS = [
     { time: 60, label: '1 min', difficulty: 'Easy', color: 'bg-green-600 hover:bg-green-700' },
     { time: 300, label: '5 mins', difficulty: 'Medium', color: 'bg-orange-600 hover:bg-orange-700' },
     { time: 600, label: '10 mins', difficulty: 'Difficult', color: 'bg-red-600 hover:bg-red-700' },
 ];
 
-// Define debugging challenges based on difficulty
-const DEBUGGING_CHALLENGES = {
-    easy: [
+const getDebuggingChallenges = (gameDuration: number) => {
+    const easy = [
         {
             id: 'input_validation',
             penaltyKey: 'LawsOfTort_Validation',
             initialMessage: 'Fix input validation.',
             urgentMessage: 'Urgent fix input validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: 15,
-            urgentTime: 30,
-            penaltyTime: 45
+            initialTime: Math.floor(gameDuration * 0.25), // 25% of game time
+            urgentTime: Math.floor(gameDuration * 0.5), // 50% of game time
+            penaltyTime: Math.floor(gameDuration * 0.75) // 75% of game time
         }
-    ],
-    medium: [
+    ];
+
+    const medium = [
         {
             id: 'alt_tag',
             penaltyKey: 'DisabilityAct',
             initialMessage: 'Fix alt in img1.',
             urgentMessage: 'Urgent fix alt in img1.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: 30,
-            urgentTime: 90,
-            penaltyTime: 150
+            initialTime: Math.floor(gameDuration * 0.1), // 10% of game time
+            urgentTime: Math.floor(gameDuration * 0.2), // 20% of game time
+            penaltyTime: Math.floor(gameDuration * 0.3) // 30% of game time
         },
         {
             id: 'input_validation',
@@ -45,9 +43,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix input validation.',
             urgentMessage: 'Urgent fix input validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: 60,
-            urgentTime: 120,
-            penaltyTime: 180
+            initialTime: Math.floor(gameDuration * 0.2), // 20% of game time
+            urgentTime: Math.floor(gameDuration * 0.4), // 40% of game time
+            penaltyTime: Math.floor(gameDuration * 0.6) // 60% of game time
         },
         {
             id: 'secure_database',
@@ -55,9 +53,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix secure database.',
             urgentMessage: 'Urgent fix secure database.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: 90,
-            urgentTime: 150,
-            penaltyTime: 210
+            initialTime: Math.floor(gameDuration * 0.3), // 30% of game time
+            urgentTime: Math.floor(gameDuration * 0.5), // 50% of game time
+            penaltyTime: Math.floor(gameDuration * 0.7) // 70% of game time
         },
         {
             id: 'user_login',
@@ -65,21 +63,22 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix user login.',
             urgentMessage: 'Urgent fix user login.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: 120,
-            urgentTime: 180,
-            penaltyTime: 240
+            initialTime: Math.floor(gameDuration * 0.4), // 40% of game time
+            urgentTime: Math.floor(gameDuration * 0.6), // 60% of game time
+            penaltyTime: Math.floor(gameDuration * 0.8) // 80% of game time
         }
-    ],
-    difficult: [
+    ];
+
+    const difficult = [
         {
             id: 'alt_tag_1',
             penaltyKey: 'DisabilityAct',
             initialMessage: 'Fix alt in img1.',
             urgentMessage: 'Urgent fix alt in img1.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: 30,
-            urgentTime: 90,
-            penaltyTime: 150
+            initialTime: Math.floor(gameDuration * 0.05), // 5% of game time
+            urgentTime: Math.floor(gameDuration * 0.15), // 15% of game time
+            penaltyTime: Math.floor(gameDuration * 0.25) // 25% of game time
         },
         {
             id: 'alt_tag_2',
@@ -87,9 +86,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix alt in img2.',
             urgentMessage: 'Urgent fix alt in img2.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: 60,
-            urgentTime: 120,
-            penaltyTime: 180
+            initialTime: Math.floor(gameDuration * 0.1), // 10% of game time
+            urgentTime: Math.floor(gameDuration * 0.2), // 20% of game time
+            penaltyTime: Math.floor(gameDuration * 0.3) // 30% of game time
         },
         {
             id: 'input_validation_1',
@@ -97,9 +96,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix input validation.',
             urgentMessage: 'Urgent fix input validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: 90,
-            urgentTime: 150,
-            penaltyTime: 210
+            initialTime: Math.floor(gameDuration * 0.15), // 15% of game time
+            urgentTime: Math.floor(gameDuration * 0.25), // 25% of game time
+            penaltyTime: Math.floor(gameDuration * 0.35) // 35% of game time
         },
         {
             id: 'input_validation_2',
@@ -107,9 +106,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix email validation.',
             urgentMessage: 'Urgent fix email validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: 120,
-            urgentTime: 180,
-            penaltyTime: 240
+            initialTime: Math.floor(gameDuration * 0.2), // 20% of game time
+            urgentTime: Math.floor(gameDuration * 0.3), // 30% of game time
+            penaltyTime: Math.floor(gameDuration * 0.4) // 40% of game time
         },
         {
             id: 'secure_database_1',
@@ -117,9 +116,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix secure database.',
             urgentMessage: 'Urgent fix secure database.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: 150,
-            urgentTime: 210,
-            penaltyTime: 270
+            initialTime: Math.floor(gameDuration * 0.25), // 25% of game time
+            urgentTime: Math.floor(gameDuration * 0.35), // 35% of game time
+            penaltyTime: Math.floor(gameDuration * 0.45) // 45% of game time
         },
         {
             id: 'secure_database_2',
@@ -127,9 +126,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix database security.',
             urgentMessage: 'Urgent fix database security.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: 180,
-            urgentTime: 240,
-            penaltyTime: 300
+            initialTime: Math.floor(gameDuration * 0.3), // 30% of game time
+            urgentTime: Math.floor(gameDuration * 0.4), // 40% of game time
+            penaltyTime: Math.floor(gameDuration * 0.5) // 50% of game time
         },
         {
             id: 'user_login_1',
@@ -137,9 +136,9 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix user login.',
             urgentMessage: 'Urgent fix user login.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: 210,
-            urgentTime: 270,
-            penaltyTime: 330
+            initialTime: Math.floor(gameDuration * 0.35), // 35% of game time
+            urgentTime: Math.floor(gameDuration * 0.45), // 45% of game time
+            penaltyTime: Math.floor(gameDuration * 0.55) // 55% of game time
         },
         {
             id: 'user_login_2',
@@ -147,11 +146,13 @@ const DEBUGGING_CHALLENGES = {
             initialMessage: 'Fix authentication.',
             urgentMessage: 'Urgent fix authentication.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: 240,
-            urgentTime: 300,
-            penaltyTime: 360
+            initialTime: Math.floor(gameDuration * 0.4), // 40% of game time
+            urgentTime: Math.floor(gameDuration * 0.5), // 50% of game time
+            penaltyTime: Math.floor(gameDuration * 0.6) // 60% of game time
         }
-    ]
+    ];
+
+    return { easy, medium, difficult };
 };
 
 // Distraction messages
@@ -212,6 +213,8 @@ const CourtRoomPage: React.FC = () => {
     const [penaltyScreen, setPenaltyScreen] = useState<string | null>(null);
     const [processedChallenges, setProcessedChallenges] = useState<Set<string>>(new Set());
     const [distractionMessages, setDistractionMessages] = useState<Message[]>([]);
+    const [lastDistractionTime, setLastDistractionTime] = useState<number>(0);
+    const [popupQueue, setPopupQueue] = useState<Message[]>([]);
 
     const formatTime = (totalSeconds: number) => {
         const minutes = Math.floor(totalSeconds / 60);
@@ -236,7 +239,8 @@ const CourtRoomPage: React.FC = () => {
     // Get current challenges based on difficulty
     const getCurrentChallenges = () => {
         const difficulty = getCurrentDifficulty();
-        return DEBUGGING_CHALLENGES[difficulty as keyof typeof DEBUGGING_CHALLENGES] || [];
+        const challenges = getDebuggingChallenges(selectedGameTime);
+        return challenges[difficulty as keyof typeof challenges] || [];
     };
 
     const isFixApplied = (penaltyKey: Message['penaltyKey']): boolean => {
@@ -288,7 +292,7 @@ ${userCode}
 
         setGeneratedOutput(finalHtml);
 
-        const timeElapsed = selectedGameTime - timeRemaining;
+        const timeElapsed = selectedGameTime - timeRemaining; 
 
         try {
             const response = await fetch('/api/results', {
@@ -316,7 +320,7 @@ ${userCode}
     
     // Timer Logic Effect
     useEffect(() => {
-        let intervalId: NodeJS.Timeout | undefined = undefined;
+        let intervalId: NodeJS.Timeout | undefined = undefined; 
 
         if (isRunning && timeRemaining > 0) {
             intervalId = setInterval(() => {
@@ -336,7 +340,7 @@ ${userCode}
         };
     }, [isRunning, timeRemaining, gameState]);
 
-    // New Message/Penalty Logic Effect
+    // New Message/Penalty Logic Effect with smart timing
     useEffect(() => {
         if (gameState !== 'playing' || !isRunning || penaltyScreen) return;
 
@@ -347,7 +351,7 @@ ${userCode}
         challenges.forEach(challenge => {
             const challengeKey = `${challenge.id}_${challenge.initialTime}`;
             
-            // Initial message
+            // Initial message - appears around 10-15 seconds for all difficulties
             if (elapsedTime >= challenge.initialTime && !processedChallenges.has(`${challengeKey}_initial`)) {
                 const message: Message = {
                     id: challenge.initialTime,
@@ -360,11 +364,17 @@ ${userCode}
                 setCurrentMessages(prev => [...prev, message]);
                 setMessageHistory(prev => [...prev, message]);
                 setUnreadCount(prev => prev + 1);
-                setCurrentPopup(message);
+                
+                // Add to popup queue or show immediately if no current popup
+                if (currentPopup) {
+                    setPopupQueue(prev => [...prev, message]);
+                } else {
+                    setCurrentPopup(message);
+                }
                 setProcessedChallenges(prev => new Set([...prev, `${challengeKey}_initial`]));
             }
             
-            // Urgent message
+            // Urgent message - timing based on difficulty
             if (elapsedTime >= challenge.urgentTime && 
                 !processedChallenges.has(`${challengeKey}_urgent`) &&
                 processedChallenges.has(`${challengeKey}_initial`) &&
@@ -381,7 +391,13 @@ ${userCode}
                 setCurrentMessages(prev => [...prev, message]);
                 setMessageHistory(prev => [...prev, message]);
                 setUnreadCount(prev => prev + 1);
-                setCurrentPopup(message);
+                
+                // Add to popup queue or show immediately if no current popup
+                if (currentPopup) {
+                    setPopupQueue(prev => [...prev, message]);
+                } else {
+                    setCurrentPopup(message);
+                }
                 setProcessedChallenges(prev => new Set([...prev, `${challengeKey}_urgent`]));
             }
             
@@ -398,22 +414,40 @@ ${userCode}
             }
         });
         
-        // Add distraction messages every 30 seconds
-        if (elapsedTime > 0 && elapsedTime % 30 === 0) {
-            const randomDistraction = DISTRACTION_MESSAGES[Math.floor(Math.random() * DISTRACTION_MESSAGES.length)];
-            const distractionMessage: Message = {
-                id: elapsedTime,
-                source: randomDistraction.source as 'Family' | 'Boss' | 'Agile',
-                text: randomDistraction.text,
-                isCritical: false
-            };
+        // Add distraction messages at safe intervals (avoiding critical message times)
+        const distractionInterval = Math.max(15, Math.floor(selectedGameTime * 0.05)); // 5% of game time, minimum 15 seconds
+        if (elapsedTime > 0 && 
+            elapsedTime - lastDistractionTime >= distractionInterval && 
+            elapsedTime % distractionInterval === 0) {
             
-            setDistractionMessages(prev => [...prev, distractionMessage]);
-            setMessageHistory(prev => [...prev, distractionMessage]);
-            setUnreadCount(prev => prev + 1);
-            setCurrentPopup(distractionMessage);
+            const isSafeTime = !challenges.some(challenge => 
+                Math.abs(elapsedTime - challenge.initialTime) < 5 || 
+                Math.abs(elapsedTime - challenge.urgentTime) < 5
+            );
+            
+            if (isSafeTime) {
+                const randomDistraction = DISTRACTION_MESSAGES[Math.floor(Math.random() * DISTRACTION_MESSAGES.length)];
+                const distractionMessage: Message = {
+                    id: elapsedTime,
+                    source: randomDistraction.source as 'Family' | 'Boss' | 'Agile',
+                    text: randomDistraction.text,
+                    isCritical: false
+                };
+                
+                setDistractionMessages(prev => [...prev, distractionMessage]);
+                setMessageHistory(prev => [...prev, distractionMessage]);
+                setUnreadCount(prev => prev + 1);
+                setLastDistractionTime(elapsedTime);
+                
+                // Add to popup queue or show immediately if no current popup
+                if (currentPopup) {
+                    setPopupQueue(prev => [...prev, distractionMessage]);
+                } else {
+                    setCurrentPopup(distractionMessage);
+                }
+            }
         }
-    }, [timeRemaining, isRunning, processedChallenges, userCode, selectedGameTime, gameState, penaltyScreen]);
+    }, [timeRemaining, isRunning, processedChallenges, userCode, selectedGameTime, gameState, penaltyScreen, currentPopup, lastDistractionTime]);
 
     // Control Functions
     const startGame = () => {
@@ -431,6 +465,8 @@ ${userCode}
             setPenaltyScreen(null);
             setProcessedChallenges(new Set());
             setDistractionMessages([]);
+            setLastDistractionTime(0);
+            setPopupQueue([]);
         }
     };
 
@@ -450,11 +486,28 @@ ${userCode}
         setPenaltyScreen(null);
         setProcessedChallenges(new Set());
         setDistractionMessages([]);
+        setLastDistractionTime(0);
+        setPopupQueue([]);
     };
 
     const handlePopupOk = () => {
         setCurrentPopup(null);
+        // Process next popup in queue if available
+        if (popupQueue.length > 0) {
+            const nextPopup = popupQueue[0];
+            setPopupQueue(prev => prev.slice(1));
+            setCurrentPopup(nextPopup);
+        }
     };
+
+    // Process popup queue to ensure only one popup at a time
+    useEffect(() => {
+        if (!currentPopup && popupQueue.length > 0) {
+            const nextPopup = popupQueue[0];
+            setPopupQueue(prev => prev.slice(1));
+            setCurrentPopup(nextPopup);
+        }
+    }, [currentPopup, popupQueue]);
 
     const toggleMessageHistory = () => {
         setShowMessageHistory(!showMessageHistory);
@@ -527,8 +580,8 @@ ${userCode}
                 <div className={styles.headerLeft}>
                     <h1 className={styles.title}>The Court Room Challenge</h1>
                     <p className={styles.studentNo}>Student No.</p>
-                </div>
-                
+            </div>
+
                 <div className={styles.timerControls}>
                     <div className={styles.timer}>
                         <span className={styles.timerLabel}>Time Remaining:</span>
@@ -542,12 +595,12 @@ ${userCode}
                             New Game
                         </button>
                         <button onClick={generateFinalCode} className={styles.endBtn}>
-                            End Trial & Generate Code
-                        </button>
+                    End Trial & Generate Code
+                </button>
                     </div>
                 </div>
             </div>
-
+            
             {/* Penalties display */}
             {penalties.length > 0 && (
                 <div className={styles.penalties}>
@@ -557,7 +610,7 @@ ${userCode}
                     ))}
                 </div>
             )}
-
+            
             {/* Message icon */}
             <button 
                 className={styles.messageIcon}
@@ -583,11 +636,11 @@ ${userCode}
                         >
                             ×
                         </button>
-                    </div>
+                </div>
                     <div className={styles.messageList}>
                         {messageHistory.slice().reverse().map((msg) => (
-                            <div 
-                                key={msg.id} 
+                        <div 
+                            key={msg.id} 
                                 className={`${styles.messageItem} ${msg.isCritical ? styles.criticalMessage : ''}`}
                             >
                                 <div className={styles.messageHeader}>
@@ -595,8 +648,8 @@ ${userCode}
                                     <span className={styles.messageTime}>{formatMessageTime(msg.id)}</span>
                                 </div>
                                 <div className={styles.messageText}>{msg.text}</div>
-                            </div>
-                        ))}
+                        </div>
+                    ))}
                     </div>
                 </div>
             )}
