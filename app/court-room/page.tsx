@@ -297,6 +297,8 @@ const CourtRoomPage: React.FC = () => {
     const [distractionMessages, setDistractionMessages] = useState<Message[]>([]);
     const [lastDistractionTime, setLastDistractionTime] = useState<number>(0);
     const [popupQueue, setPopupQueue] = useState<Message[]>([]);
+    const [showWinPopup, setShowWinPopup] = useState(false);
+    const [showFixFirstPopup, setShowFixFirstPopup] = useState(false);
 
     const formatTime = (totalSeconds: number) => {
         const minutes = Math.floor(totalSeconds / 60);
@@ -338,7 +340,11 @@ const CourtRoomPage: React.FC = () => {
 
         switch (penaltyKey) {
             case 'DisabilityAct':
-                return /<img[^>]*alt=["'][^"']*["'][^>]*>/i.test(userCode);
+                // All images must include an alt attribute
+                const imgTags = userCode.match(/<img\b[^>]*>/gi) || [];
+                if (imgTags.length === 0) return false;
+                const imgsWithAlt = imgTags.filter(tag => /\balt=\s*["'][^"']*["']/i.test(tag));
+                return imgsWithAlt.length === imgTags.length;
                 
             case 'LawsOfTort_Validation':
                 return userCode.includes("if (!email.includes('@'))");
@@ -352,6 +358,13 @@ const CourtRoomPage: React.FC = () => {
             default:
                 return false;
         }
+    };
+
+    // Determine if all configured challenges for the current difficulty are fixed
+    const areAllChallengesFixed = (): boolean => {
+        const challenges = getCurrentChallenges();
+        if (!challenges || challenges.length === 0) return false;
+        return challenges.every(ch => isFixApplied(ch.penaltyKey as 'DisabilityAct' | 'LawsOfTort_Validation' | 'LawsOfTort_Database' | 'Bankruptcy'));
     };
 
     const generateFinalCode = async () => {
@@ -418,9 +431,12 @@ ${userCode}
             }, 1000);
         } else if (timeRemaining === 0 && gameState === 'playing') {
             setIsRunning(false);
-            setGameState('game_over');
-            console.log("Time's up! Game Over."); 
-            generateFinalCode();
+            // Show win popup if all issues fixed, else just end normally (existing penalties may also trigger)
+            if (areAllChallengesFixed()) {
+                setShowWinPopup(true);
+            } else {
+                setGameState('game_over');
+            }
         }
 
         return () => {
@@ -689,9 +705,25 @@ ${userCode}
                         <button onClick={resetGame} className={styles.controlBtn}>
                             New Game
                         </button>
-                        <button onClick={generateFinalCode} className={styles.endBtn}>
-                    End Trial & Generate Code
-                </button>
+                        <button 
+                            onClick={() => {
+                                // Block early end if not all fixed and timer not finished
+                                if (timeRemaining > 0 && !areAllChallengesFixed()) {
+                                    setShowFixFirstPopup(true);
+                                    return;
+                                }
+                                if (areAllChallengesFixed()) {
+                                    // If all fixed, show win popup (even if timer not zero)
+                                    setShowWinPopup(true);
+                                } else {
+                                    // Otherwise, proceed to generate code and end
+                                    generateFinalCode();
+                                }
+                            }} 
+                            className={styles.endBtn}
+                        >
+                            End Trial & Generate Code
+                        </button>
                     </div>
                 </div>
             </div>
@@ -794,6 +826,41 @@ ${userCode}
                             >
                                 OK
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Fix-first popup */}
+            {showFixFirstPopup && (
+                <div className={styles.popupOverlay}>
+                    <div className={styles.popup}>
+                        <div className={styles.popupHeader}>
+                            <h3 className={styles.popupTitle}>Finish Debugging First</h3>
+                        </div>
+                        <div className={styles.popupContent}>
+                            <p className={styles.popupMessage}>Please fix all critical issues before ending the trial.</p>
+                        </div>
+                        <div className={styles.popupActions}>
+                            <button onClick={() => setShowFixFirstPopup(false)} className={styles.popupOkBtn}>OK</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Win popup */}
+            {showWinPopup && (
+                <div className={styles.popupOverlay}>
+                    <div className={styles.popup}>
+                        <div className={styles.popupHeader}>
+                            <h3 className={styles.popupTitle}>Congratulations!</h3>
+                        </div>
+                        <div className={styles.popupContent}>
+                            <p className={styles.popupMessage}>You have fixed the bugs and won the Court Room Challenge.</p>
+                        </div>
+                        <div className={styles.popupActions}>
+                            <button onClick={() => { setShowWinPopup(false); resetGame(); }} className={styles.controlBtn}>Play New Game</button>
+                            <button onClick={() => { setShowWinPopup(false); generateFinalCode(); }} className={styles.popupOkBtn}>Generate HTML Code</button>
                         </div>
                     </div>
                 </div>
