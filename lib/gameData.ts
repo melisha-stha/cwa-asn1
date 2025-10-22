@@ -3,7 +3,7 @@ import { Message } from '../app/messages';
 // --- Game Configuration Data ---
 
 export const TIME_OPTIONS = [
-    { time: 60, label: '1 min', difficulty: 'Easy', color: 'bg-green-600 hover:bg-green-700' },
+    { time: 120, label: '2 mins', difficulty: 'Easy', color: 'bg-green-600 hover:bg-green-700' },
     { time: 300, label: '5 mins', difficulty: 'Medium', color: 'bg-orange-600 hover:bg-orange-700' },
     { time: 600, label: '10 mins', difficulty: 'Difficult', color: 'bg-red-600 hover:bg-red-700' },
 ];

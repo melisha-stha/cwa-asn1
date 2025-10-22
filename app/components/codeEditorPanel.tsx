@@ -38,8 +38,8 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                     <p className={styles.studentNo}>Time Elapsed: {formatTime(timeElapsed)}</p>
                 </div>
                 <div className={styles.timerControls}>
-                    <button 
-                        onClick={onToggleMessageHistory} 
+                    <button
+                        onClick={onToggleMessageHistory}
                         className={styles.messageIcon}
                         title="View Messages"
                     >
@@ -54,7 +54,7 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                     <div className={styles.timer}>
                         Time Remaining: <span className={styles.timerValue}>{formatTime(timeRemaining)}</span>
                     </div>
-                    <div className={styles.controls}>
+                    <div className={styles.controls} style={{ gap: '4px' }}>
                         {onPauseResume && (
                             <button
                                 onClick={onPauseResume}

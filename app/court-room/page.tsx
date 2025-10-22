@@ -75,7 +75,7 @@ const CourtRoomPage: React.FC = () => {
 
 
     const getCurrentDifficulty = useCallback(() => {
-        if (selectedGameTime === 60) return 'easy';
+        if (selectedGameTime === 120) return 'easy';
         if (selectedGameTime === 300) return 'medium';
         if (selectedGameTime === 600) return 'difficult';
         return 'medium';
