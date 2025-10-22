@@ -214,7 +214,7 @@ const MEDIUM_CODE = `
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     // BUG: insecure database wording and missing validation
-    console.log('Saving data to insecure database...');
+    console.log('Saving data to insecure database...'); 
     alert('Saved');
   }
 
@@ -347,7 +347,17 @@ const CourtRoomPage: React.FC = () => {
                 return imgsWithAlt.length === imgTags.length;
                 
             case 'LawsOfTort_Validation':
-                return userCode.includes("if (!email.includes('@'))");
+                // Flexible detection: accept common patterns anywhere in the code
+                const hasAtIncludes = /email[^}]*includes\s*\(\s*['"]@['"]\s*\)/i.test(userCode);
+                const hasDotIncludes = /email[^}]*includes\s*\(\s*['"]\.["']\s*\)/i.test(userCode);
+                const hasAtIndexOf = /email[^}]*indexOf\s*\(\s*['"]@['"]\s*\)/i.test(userCode);
+                const hasDotIndexOf = /email[^}]*indexOf\s*\(\s*['"]\.["']\s*\)/i.test(userCode);
+                const hasRegexEmail = /@.*\./i.test(userCode) && /(test|match|exec)\s*\(/i.test(userCode);
+                return (
+                    hasRegexEmail ||
+                    (hasAtIncludes && hasDotIncludes) ||
+                    (hasAtIndexOf && hasDotIndexOf)
+                );
                 
             case 'LawsOfTort_Database':
                 return userCode.includes('secure database') && !userCode.includes('insecure database');
@@ -435,7 +445,7 @@ ${userCode}
             if (areAllChallengesFixed()) {
                 setShowWinPopup(true);
             } else {
-                setGameState('game_over');
+            setGameState('game_over');
             }
         }
 
@@ -480,6 +490,19 @@ ${userCode}
                 setProcessedChallenges(prev => new Set([...prev, `${challengeKey}_initial`]));
             }
             
+            // If user fixed the issue at any time, clear any queued urgent/penalty entries for this challenge
+            if (isFixApplied(challenge.penaltyKey as 'DisabilityAct' | 'LawsOfTort_Validation' | 'LawsOfTort_Database' | 'Bankruptcy')) {
+                setPopupQueue(prev => prev.filter(m => m.penaltyKey !== challenge.penaltyKey));
+                // Mark urgent and penalty as processed to prevent future scheduling
+                if (!processedChallenges.has(`${challengeKey}_urgent`)) {
+                    setProcessedChallenges(prev => new Set([...prev, `${challengeKey}_urgent`]));
+                }
+                if (!processedChallenges.has(`${challengeKey}_penalty`)) {
+                    setProcessedChallenges(prev => new Set([...prev, `${challengeKey}_penalty`]));
+                }
+                return; // skip further handling for this challenge
+            }
+
             // Urgent message - timing based on difficulty
             if (elapsedTime >= challenge.urgentTime && 
                 !processedChallenges.has(`${challengeKey}_urgent`) &&
@@ -722,8 +745,8 @@ ${userCode}
                             }} 
                             className={styles.endBtn}
                         >
-                            End Trial & Generate Code
-                        </button>
+                    End Trial & Generate Code
+                </button>
                     </div>
                 </div>
             </div>
