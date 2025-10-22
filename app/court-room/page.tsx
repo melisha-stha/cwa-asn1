@@ -33,9 +33,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix alt in img1.',
             urgentMessage: 'Urgent fix alt in img1.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: Math.floor(gameDuration * 0.1), // 10% of game time
-            urgentTime: Math.floor(gameDuration * 0.2), // 20% of game time
-            penaltyTime: Math.floor(gameDuration * 0.3) // 30% of game time
+            initialTime: Math.floor(gameDuration * 0.1), // 10% of game time (30s for 5min)
+            urgentTime: Math.floor(gameDuration * 0.2), // 20% of game time (60s for 5min)
+            penaltyTime: Math.floor(gameDuration * 0.3) // 30% of game time (90s for 5min)
         },
         {
             id: 'input_validation',
@@ -43,9 +43,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix input validation.',
             urgentMessage: 'Urgent fix input validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.2), // 20% of game time
-            urgentTime: Math.floor(gameDuration * 0.4), // 40% of game time
-            penaltyTime: Math.floor(gameDuration * 0.6) // 60% of game time
+            initialTime: Math.floor(gameDuration * 0.2) + 120, // 20% + 2 minutes (150s for 5min)
+            urgentTime: Math.floor(gameDuration * 0.4) + 120, // 40% + 2 minutes (180s for 5min)
+            penaltyTime: Math.floor(gameDuration * 0.6) + 120 // 60% + 2 minutes (210s for 5min)
         },
         {
             id: 'secure_database',
@@ -53,9 +53,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix secure database.',
             urgentMessage: 'Urgent fix secure database.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.3), // 30% of game time
-            urgentTime: Math.floor(gameDuration * 0.5), // 50% of game time
-            penaltyTime: Math.floor(gameDuration * 0.7) // 70% of game time
+            initialTime: Math.floor(gameDuration * 0.3) + 240, // 30% + 4 minutes (210s for 5min)
+            urgentTime: Math.floor(gameDuration * 0.5) + 240, // 50% + 4 minutes (240s for 5min)
+            penaltyTime: Math.floor(gameDuration * 0.7) + 240 // 70% + 4 minutes (270s for 5min)
         },
         {
             id: 'user_login',
@@ -63,9 +63,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix user login.',
             urgentMessage: 'Urgent fix user login.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: Math.floor(gameDuration * 0.4), // 40% of game time
-            urgentTime: Math.floor(gameDuration * 0.6), // 60% of game time
-            penaltyTime: Math.floor(gameDuration * 0.8) // 80% of game time
+            initialTime: Math.floor(gameDuration * 0.4) + 360, // 40% + 6 minutes (270s for 5min)
+            urgentTime: Math.floor(gameDuration * 0.6) + 360, // 60% + 6 minutes (300s for 5min)
+            penaltyTime: Math.floor(gameDuration * 0.8) + 360 // 80% + 6 minutes (330s for 5min)
         }
     ];
 
@@ -76,9 +76,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix alt in img1.',
             urgentMessage: 'Urgent fix alt in img1.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: Math.floor(gameDuration * 0.05), // 5% of game time
-            urgentTime: Math.floor(gameDuration * 0.15), // 15% of game time
-            penaltyTime: Math.floor(gameDuration * 0.25) // 25% of game time
+            initialTime: Math.floor(gameDuration * 0.05), // 5% of game time (30s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.15), // 15% of game time (90s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.25) // 25% of game time (150s for 10min)
         },
         {
             id: 'alt_tag_2',
@@ -86,9 +86,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix alt in img2.',
             urgentMessage: 'Urgent fix alt in img2.',
             penaltyMessage: 'You are fined for breaking the Disability Act.',
-            initialTime: Math.floor(gameDuration * 0.1), // 10% of game time
-            urgentTime: Math.floor(gameDuration * 0.2), // 20% of game time
-            penaltyTime: Math.floor(gameDuration * 0.3) // 30% of game time
+            initialTime: Math.floor(gameDuration * 0.1) + 60, // 10% + 1 minute (120s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.2) + 60, // 20% + 1 minute (180s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.3) + 60 // 30% + 1 minute (240s for 10min)
         },
         {
             id: 'input_validation_1',
@@ -96,9 +96,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix input validation.',
             urgentMessage: 'Urgent fix input validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.15), // 15% of game time
-            urgentTime: Math.floor(gameDuration * 0.25), // 25% of game time
-            penaltyTime: Math.floor(gameDuration * 0.35) // 35% of game time
+            initialTime: Math.floor(gameDuration * 0.15) + 120, // 15% + 2 minutes (210s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.25) + 120, // 25% + 2 minutes (270s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.35) + 120 // 35% + 2 minutes (330s for 10min)
         },
         {
             id: 'input_validation_2',
@@ -106,9 +106,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix email validation.',
             urgentMessage: 'Urgent fix email validation.',
             penaltyMessage: 'You are fined for breaking the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.2), // 20% of game time
-            urgentTime: Math.floor(gameDuration * 0.3), // 30% of game time
-            penaltyTime: Math.floor(gameDuration * 0.4) // 40% of game time
+            initialTime: Math.floor(gameDuration * 0.2) + 180, // 20% + 3 minutes (300s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.3) + 180, // 30% + 3 minutes (360s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.4) + 180 // 40% + 3 minutes (420s for 10min)
         },
         {
             id: 'secure_database_1',
@@ -116,9 +116,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix secure database.',
             urgentMessage: 'Urgent fix secure database.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.25), // 25% of game time
-            urgentTime: Math.floor(gameDuration * 0.35), // 35% of game time
-            penaltyTime: Math.floor(gameDuration * 0.45) // 45% of game time
+            initialTime: Math.floor(gameDuration * 0.25) + 240, // 25% + 4 minutes (390s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.35) + 240, // 35% + 4 minutes (450s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.45) + 240 // 45% + 4 minutes (510s for 10min)
         },
         {
             id: 'secure_database_2',
@@ -126,9 +126,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix database security.',
             urgentMessage: 'Urgent fix database security.',
             penaltyMessage: 'You got hacked and you have broken the Laws of Tort.',
-            initialTime: Math.floor(gameDuration * 0.3), // 30% of game time
-            urgentTime: Math.floor(gameDuration * 0.4), // 40% of game time
-            penaltyTime: Math.floor(gameDuration * 0.5) // 50% of game time
+            initialTime: Math.floor(gameDuration * 0.3) + 300, // 30% + 5 minutes (480s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.4) + 300, // 40% + 5 minutes (540s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.5) + 300 // 50% + 5 minutes (600s for 10min)
         },
         {
             id: 'user_login_1',
@@ -136,9 +136,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix user login.',
             urgentMessage: 'Urgent fix user login.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: Math.floor(gameDuration * 0.35), // 35% of game time
-            urgentTime: Math.floor(gameDuration * 0.45), // 45% of game time
-            penaltyTime: Math.floor(gameDuration * 0.55) // 55% of game time
+            initialTime: Math.floor(gameDuration * 0.35) + 360, // 35% + 6 minutes (570s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.45) + 360, // 45% + 6 minutes (630s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.55) + 360 // 55% + 6 minutes (690s for 10min)
         },
         {
             id: 'user_login_2',
@@ -146,9 +146,9 @@ const getDebuggingChallenges = (gameDuration: number) => {
             initialMessage: 'Fix authentication.',
             urgentMessage: 'Urgent fix authentication.',
             penaltyMessage: 'You have been declared bankrupt and no one can use your app, so you don\'t get paid.',
-            initialTime: Math.floor(gameDuration * 0.4), // 40% of game time
-            urgentTime: Math.floor(gameDuration * 0.5), // 50% of game time
-            penaltyTime: Math.floor(gameDuration * 0.6) // 60% of game time
+            initialTime: Math.floor(gameDuration * 0.4) + 420, // 40% + 7 minutes (660s for 10min)
+            urgentTime: Math.floor(gameDuration * 0.5) + 420, // 50% + 7 minutes (720s for 10min)
+            penaltyTime: Math.floor(gameDuration * 0.6) + 420 // 60% + 7 minutes (780s for 10min)
         }
     ];
 
@@ -165,14 +165,10 @@ const DISTRACTION_MESSAGES = [
     { source: 'Agile', text: 'We need to update the user interface design.' }
 ];
 
-const initialProblemCode = `
+// Difficulty-specific buggy code templates
+const EASY_CODE = `
 <div style="border:1px solid black; padding:10px;">
-  <h3 style="color:blue;">User Profile</h3>
-  
-  <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
-
-  <label style="display:block; margin-top:10px;">Username:</label>
-  <input type="text" id="username" value="user123" style="border:1px solid #ccc;">
+  <h3 style="color:blue;">User Profile (Easy)</h3>
 
   <label style="display:block; margin-top:10px;">Email:</label>
   <input type="text" id="email" value="bad-email" style="border:1px solid #ccc;">
@@ -182,12 +178,98 @@ const initialProblemCode = `
 
 <script>
   function saveData() {
+    const email = document.getElementById('email').value;
+    // BUG: missing input validation like: if (!email.includes('@')) { ... }
+    console.log('Saving profile...');
+    alert('Saved');
+  }
+</script>
+`.trim();
+
+const MEDIUM_CODE = `
+<div style="border:1px solid black; padding:10px;">
+  <h3 style="color:blue;">User Profile (Medium)</h3>
+
+  <!-- BUG: missing alt -->
+  <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
+
+  <label style="display:block; margin-top:10px;">Email:</label>
+  <input type="text" id="email" value="bad-email" style="border:1px solid #ccc;">
+
+  <label style="display:block; margin-top:10px;">Username:</label>
+  <input type="text" id="username" value="user123" style="border:1px solid #ccc;">
+
+  <button onclick="saveData()" style="background-color:gray; color:white; padding:5px 10px;">Save</button>
+
+  <div style="margin-top:12px;">
+    <label>Login:</label>
+    <input id="login-username" placeholder="username"/>
+    <input id="login-password" placeholder="password"/>
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+  function saveData() {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
-    
-    console.log('Saving data to insecure database...'); 
-    
-    alert('Data saved (but maybe not securely or legally!)');
+    // BUG: insecure database wording and missing validation
+    console.log('Saving data to insecure database...');
+    alert('Saved');
+  }
+
+  function login() {
+    const u = document.getElementById('login-username').value;
+    const p = document.getElementById('login-password').value;
+    // BUG: no proper login validation/security checks
+    if (u && p) {
+      alert('Logged in');
+    }
+  }
+</script>
+`.trim();
+
+const DIFFICULT_CODE = `
+<div style="border:1px solid black; padding:10px;">
+  <h3 style="color:blue;">User Profile (Difficult)</h3>
+
+  <!-- BUGS: two images, both missing alt -->
+  <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
+  <img src="avatar.png" style="width:80px; height:80px; border-radius:50%; margin-left:10px;">
+
+  <label style="display:block; margin-top:10px;">Email:</label>
+  <input type="text" id="email" value="bad-email" style="border:1px solid #ccc;">
+
+  <label style="display:block; margin-top:10px;">Alt Email:</label>
+  <input type="text" id="altEmail" value="also-bad" style="border:1px solid #ccc;">
+
+  <button onclick="saveData()" style="background-color:gray; color:white; padding:5px 10px;">Save</button>
+
+  <div style="margin-top:12px;">
+    <label>Login:</label>
+    <input id="login-username" placeholder="username"/>
+    <input id="login-password" placeholder="password"/>
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+  function saveData() {
+    const email = document.getElementById('email').value;
+    const altEmail = document.getElementById('altEmail').value;
+    // BUGS: missing input validation for both emails
+    // BUG: insecure database wording
+    console.log('Saving data to insecure database...');
+    alert('Saved');
+  }
+
+  function login() {
+    const u = document.getElementById('login-username').value;
+    const p = document.getElementById('login-password').value;
+    // BUG: no password strength / validation
+    if (u && p) {
+      alert('Logged in');
+    }
   }
 </script>
 `.trim();
@@ -199,7 +281,7 @@ const CourtRoomPage: React.FC = () => {
     const [timeRemaining, setTimeRemaining] = useState(selectedGameTime);
     const [isRunning, setIsRunning] = useState(false);
     const [penalties, setPenalties] = useState<string[]>([]);
-    const [userCode, setUserCode] = useState(initialProblemCode);
+    const [userCode, setUserCode] = useState(EASY_CODE);
     const [generatedOutput, setGeneratedOutput] = useState('');
 
     // Message system state
@@ -241,6 +323,14 @@ const CourtRoomPage: React.FC = () => {
         const difficulty = getCurrentDifficulty();
         const challenges = getDebuggingChallenges(selectedGameTime);
         return challenges[difficulty as keyof typeof challenges] || [];
+    };
+
+    // Get starting buggy code based on difficulty
+    const getCodeTemplateForDifficulty = () => {
+        const difficulty = getCurrentDifficulty();
+        if (difficulty === 'easy') return EASY_CODE;
+        if (difficulty === 'medium') return MEDIUM_CODE;
+        return DIFFICULT_CODE;
     };
 
     const isFixApplied = (penaltyKey: Message['penaltyKey']): boolean => {
@@ -415,7 +505,12 @@ ${userCode}
         });
         
         // Add distraction messages at safe intervals (avoiding critical message times)
-        const distractionInterval = Math.max(15, Math.floor(selectedGameTime * 0.05)); // 5% of game time, minimum 15 seconds
+        // More frequent distractions in difficult mode
+        const difficulty = getCurrentDifficulty();
+        const distractionInterval = difficulty === 'difficult' 
+            ? Math.max(7, Math.floor(selectedGameTime * 0.02)) // 2% of game time, minimum 7 seconds for difficult
+            : Math.max(15, Math.floor(selectedGameTime * 0.05)); // 5% of game time, minimum 15 seconds for easy/medium
+        
         if (elapsedTime > 0 && 
             elapsedTime - lastDistractionTime >= distractionInterval && 
             elapsedTime % distractionInterval === 0) {
@@ -458,7 +553,7 @@ ${userCode}
             setCurrentMessages([]);
             setMessageHistory([]);
             setPenalties([]);
-            setUserCode(initialProblemCode);
+            setUserCode(getCodeTemplateForDifficulty());
             setGeneratedOutput('');
             setUnreadCount(0);
             setCurrentPopup(null);
@@ -479,7 +574,7 @@ ${userCode}
         setCurrentMessages([]);
         setMessageHistory([]);
         setPenalties([]);
-        setUserCode(initialProblemCode);
+        setUserCode(getCodeTemplateForDifficulty());
         setGeneratedOutput('');
         setUnreadCount(0);
         setCurrentPopup(null);
