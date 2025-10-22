@@ -866,3 +866,176 @@
 @media (max-width: 480px) {
   /* ... (Keep existing layout adjustments) ... */
 }
+
+/* Dramatic Penalty Screen Styles */
+.penaltyOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.courtRoomPenalty {
+  width: 90vw;
+  height: 85vh;
+  max-width: 1200px;
+  background-image: url('/court-room-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.courtRoomPenalty::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.judgeSection {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.angryJudge {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid #dc3545;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.5);
+  animation: judgeShake 0.5s ease-in-out;
+}
+
+@keyframes judgeShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.penaltyContent {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  border: 3px solid #dc3545;
+}
+
+.penaltyTitle {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #dc3545;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+.penaltySubtitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #721c24;
+  margin: 0 0 2rem 0;
+  letter-spacing: 1px;
+}
+
+.penaltyText {
+  margin: 2rem 0;
+}
+
+.penaltyMessage {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+  line-height: 1.6;
+  margin: 0;
+  padding: 1.5rem;
+  background: rgba(220, 53, 69, 0.1);
+  border-left: 5px solid #dc3545;
+  border-radius: 4px;
+}
+
+.penaltyAcknowledgeBtn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+.penaltyAcknowledgeBtn:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .courtRoomPenalty {
+    width: 95vw;
+    height: 90vh;
+  }
+  
+  .angryJudge {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .penaltyContent {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .penaltyTitle {
+    font-size: 2rem;
+  }
+  
+  .penaltySubtitle {
+    font-size: 1.2rem;
+  }
+  
+  .penaltyMessage {
+    font-size: 1rem;
+  }
+}

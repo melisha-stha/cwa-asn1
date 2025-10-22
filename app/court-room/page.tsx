@@ -215,6 +215,12 @@ const CourtRoomPage: React.FC = () => {
             return;
         }
 
+        if (isSubmissionAttempt && canWin) {
+            setIsRunning(false);
+            setShowWinPopup(true);
+            return;
+        }
+
         if (isRunning) {
             setIsRunning(false);
             setGameState('game_over');

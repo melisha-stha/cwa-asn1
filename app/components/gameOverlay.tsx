@@ -45,20 +45,28 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
     const challenges = getChallengeStatus();
     const resolvedChallenges = challenges.filter(c => c.isFixed).length;
 
-    // --- Penalty Screen ---
+    // --- Dramatic Penalty Screen ---
     if (penaltyScreen) {
         return (
-            <div className={styles.overlay}>
-                <div className={styles.penaltyBox}>
-                    <h2 className={styles.penaltyHeader}>COURT ORDER</h2>
-                    <h1 className={styles.penaltyTitle}>Penalty Issued</h1>
-                    <p className={styles.penaltyMessage}>{penaltyScreen}</p>
-                    <p className={styles.penaltySummary}>
-                        **Penalty:** {penalties[penalties.length - 1]}
-                    </p>
-                    <button onClick={onClosePenalty} className={styles.penaltyButton}>
-                        Acknowledge and Continue ({penalties.length} Penalty(s) Incurred)
-                    </button>
+            <div className={styles.penaltyOverlay}>
+                <div className={styles.courtRoomPenalty}>
+                    <div className={styles.judgeSection}>
+                        <img 
+                            src="/angry-judge.webp" 
+                            alt="Angry Judge" 
+                            className={styles.angryJudge}
+                        />
+                        <div className={styles.penaltyContent}>
+                            <h1 className={styles.penaltyTitle}>COURT ORDER</h1>
+                            <h2 className={styles.penaltySubtitle}>PENALTY ISSUED</h2>
+                            <div className={styles.penaltyText}>
+                                <p className={styles.penaltyMessage}>{penaltyScreen}</p>
+                            </div>
+                            <button onClick={onClosePenalty} className={styles.penaltyAcknowledgeBtn}>
+                                ACKNOWLEDGE PENALTY
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
