@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './court-room.module.css';
@@ -207,8 +207,12 @@ const CourtRoomPage: React.FC = () => {
         return { canWin, remainingIssues };
     }, [getChallengeStatus]);
 
+    // *** UPDATED: Now includes the actual fetch call for saving to the Prisma Database API ***
     const generateFinalCode = useCallback(async (isSubmissionAttempt = false) => {
         const { canWin } = validateWinConditions();
+        const challengeStatus = getChallengeStatus();
+        const resolvedChallenges = challengeStatus.filter(c => c.isFixed).length;
+        const timeElapsed = selectedGameTime - timeRemaining;
 
         if (isSubmissionAttempt && !canWin) {
             setShowFixFirstPopup(true);
@@ -218,18 +222,18 @@ const CourtRoomPage: React.FC = () => {
         if (isSubmissionAttempt && canWin) {
             setIsRunning(false);
             setShowWinPopup(true);
-            return;
         }
-
-        if (isRunning) {
+        
+        // Stop timer and set game_over state if not a successful submission attempt or time ran out
+        if (gameState === 'playing' && !isSubmissionAttempt || (timeRemaining === 0 && !canWin)) {
             setIsRunning(false);
             setGameState('game_over');
         }
 
-        const isSuccessfulCompletion = canWin;
+        const isSuccessfulCompletion = canWin && isSubmissionAttempt;
         const completionStatus = isSuccessfulCompletion ? 'SUCCESS' : 'INCOMPLETE';
-        const timeElapsed = selectedGameTime - timeRemaining;
 
+        // 1. Generate the HTML Output
         const finalHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -260,12 +264,33 @@ const CourtRoomPage: React.FC = () => {
 
         setGeneratedOutput(finalHtml);
 
+        // 2. Save Result to Database (Save Button logic)
         try {
             console.log('Attempting to save result to API...');
+            
+            const response = await fetch('/api/results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    generatedCode: finalHtml,
+                    penalties: penalties, // penalties is an array of penaltyKeys
+                    timeTaken: timeElapsed,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Game result saved successfully! ID:', data.id);
+            } else {
+                console.error('Failed to save game result to API:', response.status, response.statusText);
+            }
         } catch (error) {
             console.error('Error saving result:', error);
         }
-    }, [validateWinConditions, isRunning, selectedGameTime, timeRemaining, userCode]);
+    }, [validateWinConditions, isRunning, selectedGameTime, timeRemaining, userCode, penalties, gameState, getChallengeStatus]);
+    // *** END UPDATED generateFinalCode ***
 
     const addToPopupQueue = useCallback((message: Message) => {
         if (message.priority === 'critical') {
