@@ -23,11 +23,10 @@ const HamburgerMenu = () => {
       <nav className={isOpen ? styles.menuOpen : styles.menu}>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
           <li><a href="/tabs">Tabs</a></li>
           <li><a href="/prelab-qns">Pre-lab Questions</a></li>
           <li><a href="/court-room">Court Room</a></li>
-          <li><a href="/coding-races">Coding Races</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
       </nav>
     </div>
