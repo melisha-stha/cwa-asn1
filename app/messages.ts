@@ -1,9 +1,11 @@
 export type Message = {
   id: number;
-  source: 'Boss' | 'Family' | 'Agile' | 'Ethical/Legal';
+  // FIX 1: Added 'Court Order' to the allowed source types
+  source: 'Boss' | 'Family' | 'Agile' | 'Ethical/Legal' | 'Court Order'; 
   text: string;
   isCritical: boolean; // True for messages that lead to a fine if ignored
-  penaltyKey?: 'DisabilityAct' | 'LawsOfTort_Validation' | 'LawsOfTort_Database' | 'Bankruptcy'; // What the penalty relates to
+  // FIX 2: Added 'PENALTY' to the allowed penaltyKey types
+  penaltyKey?: 'DisabilityAct' | 'LawsOfTort_Validation' | 'LawsOfTort_Database' | 'Bankruptcy' | 'PENALTY' | 'Distraction'; 
   timestamp?: Date; // Actual timestamp when message was received (optional, added at runtime)
   gameTime?: number; // Game time when message appeared (optional, added at runtime)
   messageType?: 'initial' | 'urgent' | 'distraction'; // Enhanced message categorization for better distinction

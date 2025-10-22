@@ -1,3 +1,10 @@
+.welcomeScreen {
+  text-align: center;
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 42rem;
+}
+
 /* Game Container */
 .gameContainer {
   display: flex;
