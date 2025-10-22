@@ -1,22 +1,3 @@
-.container {
-  background-image: url('/court-room-bg.jpg'); 
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh; 
-  color: white; 
-  padding: 20px;
-}
-
-.welcomeScreen {
-  text-align: center;
-  padding: 2rem;
-  background-color: rgba(31, 41, 55, 0.9);
-  border-radius: 0.75rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  margin: 0 auto;
-  max-width: 42rem;
-}
-
 /* Game Container */
 .gameContainer {
   display: flex;

@@ -132,7 +132,7 @@ export default function TabsPage() {
                 ${tabs.map((tab, index) => `
                 <div style="padding: 10px 15px; border-bottom: 1px solid #dee2e6; cursor: pointer; transition: background-color 0.2s; ${index === 0 ? 'background-color: #007bff; color: white;' : ''}" onclick="switchTab(${tab.id})">
                     ${tab.title}
-                    ${tabs.length > 1 ? `<button style="float: right; background: none; border: none; color: ${index === 0 ? 'white' : '#6c757d'}; cursor: pointer; font-size: 16px; padding: 0 5px;" onmouseover="this.style.color='#dc3545'" onmouseout="this.style.color='${index === 0 ? 'white' : '#6c757d'}'" onclick="removeTab(${tab.id}); event.stopPropagation();">×</button>` : ''}
+                    ${tabs.length > 1 ? `<button style="float: right; background: none; border: none; color: ${index === 0 ? 'white' : '#6c757d'}; cursor: pointer; font-size: 16px; padding: 0 5px;" onmouseover="this.style.color='#dc3545'" onmouseout="this.style.color='${index === 0 ? 'white' : '#6c757d'}'" onclick="removeTab(${tab.id}); event.stopPropagation();">X</button>` : ''}
                 </div>`).join('')}
             </div>
             <div style="flex: 1; background: white; border: 1px solid #dee2e6; border-radius: 5px; padding: 20px; min-height: 300px;">
@@ -289,7 +289,7 @@ export default function TabsPage() {
                       onClick={() => removeTab(tab.id)}
                       title="Remove tab"
                     >
-                      ×
+                      X
                     </button>
                   )}
                 </div>

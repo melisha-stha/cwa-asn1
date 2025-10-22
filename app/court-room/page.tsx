@@ -162,7 +162,6 @@ const EASY_CODE = `
 <script>
   function saveData() {
     const email = document.getElementById('email').value;
-    // BUG: missing input validation like: if (!email.includes('@')) { ... }
     console.log('Saving profile...');
     alert('Saved');
   }
@@ -173,7 +172,6 @@ const MEDIUM_CODE = `
 <div style="border:1px solid black; padding:10px;">
   <h3 style="color:blue;">User Profile (Medium)</h3>
 
-  <!-- BUG: missing alt -->
   <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
 
   <label style="display:block; margin-top:10px;">Email:</label>
@@ -196,7 +194,6 @@ const MEDIUM_CODE = `
   function saveData() {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
-    // BUG: insecure database wording and missing validation
     console.log('Saving data to insecure database...'); 
     alert('Saved');
   }
@@ -204,7 +201,6 @@ const MEDIUM_CODE = `
   function login() {
     const u = document.getElementById('login-username').value;
     const p = document.getElementById('login-password').value;
-    // BUG: no proper login validation/security checks
     if (u && p) {
       alert('Logged in');
     }
@@ -216,7 +212,6 @@ const DIFFICULT_CODE = `
 <div style="border:1px solid black; padding:10px;">
   <h3 style="color:blue;">User Profile (Difficult)</h3>
 
-  <!-- BUGS: two images, both missing alt -->
   <img src="profile.jpg" style="width:100px; height:100px; border-radius:50%;">
   <img src="avatar.png" style="width:80px; height:80px; border-radius:50%; margin-left:10px;">
 
@@ -240,8 +235,6 @@ const DIFFICULT_CODE = `
   function saveData() {
     const email = document.getElementById('email').value;
     const altEmail = document.getElementById('altEmail').value;
-    // BUGS: missing input validation for both emails
-    // BUG: insecure database wording
     console.log('Saving data to insecure database...');
     alert('Saved');
   }
@@ -249,7 +242,6 @@ const DIFFICULT_CODE = `
   function login() {
     const u = document.getElementById('login-username').value;
     const p = document.getElementById('login-password').value;
-    // BUG: no password strength / validation
     if (u && p) {
       alert('Logged in');
     }
@@ -1014,7 +1006,7 @@ ${userCode}
         console.log(`Message history visible: ${showMessageHistory}`);
         console.log(`Expected unread count: ${expectedUnread}`);
         console.log(`Total messages in history: ${messageHistory.length}`);
-        console.log(`Counter accuracy: ${expectedUnread === unreadCount ? '✓ CORRECT' : '✗ INCORRECT'}`);
+        console.log(`Counter accuracy: ${expectedUnread === unreadCount ? 'CORRECT' : 'INCORRECT'}`);
         console.log('================================');
 
         return expectedUnread === unreadCount;
@@ -1129,7 +1121,7 @@ ${userCode}
                 <div className={styles.penalties}>
                     <h3 className={styles.penaltiesTitle}>FINES/PENALTIES</h3>
                     {penalties.map((p, index) => (
-                        <p key={index} className={styles.penaltyItem}>🚨 {p}</p>
+                        <p key={index} className={styles.penaltyItem}>[ALERT] {p}</p>
                     ))}
                 </div>
             )}
@@ -1157,7 +1149,7 @@ ${userCode}
                             onClick={toggleMessageHistory}
                             className={styles.closeBtn}
                         >
-                            ×
+                            X
                         </button>
                     </div>
                     <div className={styles.messageList}>
@@ -1170,11 +1162,11 @@ ${userCode}
                                         styles.lowPriority;
 
                             // Enhanced message type indicators
-                            const typeIcon = msg.messageType === 'urgent' ? '🚨🔥' :
-                                msg.messageType === 'initial' ? '⚠️' :
-                                    msg.source === 'Boss' ? '👔' :
-                                        msg.source === 'Family' ? '👨‍👩‍👧‍👦' :
-                                            msg.source === 'Agile' ? '📋' : '📧';
+                            const typeIcon = msg.messageType === 'urgent' ? '[URGENT]' :
+                                msg.messageType === 'initial' ? '[INITIAL]' :
+                                    msg.source === 'Boss' ? '[BOSS]' :
+                                        msg.source === 'Family' ? '[FAMILY]' :
+                                            msg.source === 'Agile' ? '[AGILE]' : '[EMAIL]';
 
                             return (
                                 <div
@@ -1294,7 +1286,7 @@ ${userCode}
                                         if (!isFixed) {
                                             return (
                                                 <li key={challenge.id} style={{ color: '#d32f2f' }}>
-                                                    • {challenge.initialMessage}
+                                                    - {challenge.initialMessage}
                                                 </li>
                                             );
                                         }

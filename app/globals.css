@@ -2,130 +2,96 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+--background: #ffffff;
+--foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+--color-background: var(--background);
+--color-foreground: var(--foreground);
+--font-sans: 'Poppins', sans-serif;
+--font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+--background: #0a0a0a;
+--foreground: #ededed;
+}
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+background: var(--background);
+color: var(--foreground);
+font-family: 'Poppins', Arial, Helvetica, sans-serif;
+min-height: 100%;
+margin: 0;
+padding: 0;
 }
 
-body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item,
-body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item {
-  color: #ffffff !important;
+html.light {
+background-color: #f8f9fa;
+color: #212529;
 }
 
-body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a,
-body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a {
-  color: #ffffff !important;
-  text-decoration: none;
+html.dark {
+background-color: #121212;
+color: #f8f9fa;
 }
 
-body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover,
-body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
-  color: #0d6efd !important;
+html.dark .navbar,
+html.dark footer {
+background-color: #1e293b !important;
+color: #f8f9fa !important;
 }
 
-body.bg-light nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover,
-body.text-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item a:hover {
-  color: #66b2ff !important;
+html.light .navbar,
+html.light footer {
+background-color: #ffffff !important;
+color: #212529 !important;
 }
 
 .nav-tabs .nav-link {
-  color: #000000 !important;
+color: #000000 !important;
 }
 
 .nav-tabs .nav-link:hover {
-  color: #0d6efd !important;
+color: #0d6efd !important;
 }
 
 .nav-tabs .nav-link.active {
-  color: #0d6efd !important;
+color: #0d6efd !important;
 }
 
 .nav-tabs .nav-item:not(:last-child) {
-  border-right: 1px solid #dee2e6;
+border-right: 1px solid #dee2e6;
 }
 
 .nav-tabs .btn-outline-danger {
-  border: none !important;
-  background: transparent !important;
-  color: #6c757d !important;
+border: none !important;
+background: transparent !important;
+color: #6c757d !important;
 }
 
 .nav-tabs .btn-outline-danger:hover {
-  border: 1px solid #dc3545 !important;
-  background: #dc3545 !important;
-  color: #ffffff !important;
+border: 1px solid #dc3545 !important;
+background: #dc3545 !important;
+color: #ffffff !important;
 }
 
 .nav-tabs .btn-outline-danger:active,
 .nav-tabs .btn-outline-danger:focus {
-  border: 1px solid #dc3545 !important;
-  background: #dc3545 !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-}
-
-body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
-body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-  color: #ffffff !important;
-}
-
-body.bg-dark nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item.active,
-body.text-white nav[aria-label="breadcrumb"] .breadcrumb .breadcrumb-item.active {
-  color: #ffffff !important;
-}
-
-body.bg-dark .bg-light,
-body.text-white .bg-light {
-  background-color: #f8f9fa !important;
-}
-
-body.bg-dark .bg-light pre,
-body.text-white .bg-light pre,
-body.bg-dark .bg-light p,
-body.text-white .bg-light p {
-  color: #000000 !important;
-}
-
-body.bg-dark pre,
-body.text-white pre {
-  color: #000000 !important;
-}
-
-body.bg-dark .text-muted,
-body.text-white .text-muted {
-  color: #6c757d !important;
-}
-
-body.bg-dark .border.rounded.p-3.bg-light pre,
-body.text-white .border.rounded.p-3.bg-light pre,
-body.bg-dark .border.rounded.p-3.bg-light p,
-body.text-white .border.rounded.p-3.bg-light p {
-  color: #000000 !important;
+border: 1px solid #dc3545 !important;
+background: #dc3545 !important;
+color: #ffffff !important;
+box-shadow: none !important;
 }
 
 body.bg-dark .breadcrumb,
 body.text-white .breadcrumb {
-  --bs-breadcrumb-item-color: #ffffff;
-  --bs-breadcrumb-item-hover-color: #ffffff;
-  --bs-breadcrumb-item-active-color: #ffffff;
-  --bs-breadcrumb-divider-color: #ffffff;
+--bs-breadcrumb-item-color: #ffffff;
+--bs-breadcrumb-item-hover-color: #ffffff;
+--bs-breadcrumb-item-active-color: #ffffff;
+--bs-breadcrumb-divider-color: #ffffff;
 }

@@ -17,14 +17,14 @@ const Navbar = () => {
         <div className={styles.navLeft}>
           <div className={styles.logoContainer}>
             <Image 
-              src="/latrobe-logo.svg" 
+              src="/latrobe-white.png" 
               alt="Latrobe University Logo" 
-              width={60} 
-              height={45}
+              width={140} 
+              height={100}
               className={styles.logo}
             />
             <div className={styles.titleContainer}>
-              <h1 className={styles.title}>CSE3CWA Assignment 2</h1>
+              <h3 className={styles.title}>CSE3CWA Assignment 2</h3>
               <p className={styles.studentNo}>Student No. 21923855</p>
             </div>
           </div>
