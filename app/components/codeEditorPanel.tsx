@@ -1,23 +1,17 @@
 import React from 'react';
 import styles from '@/app/court-room/court-room.module.css';
 
-interface ChallengeStatus {
-    id: string;
-    message: string;
-    isFixed: boolean;
-    penaltyKey: string;
-}
-
 interface CodeEditorPanelProps {
     userCode: string;
     timeRemaining: number;
     selectedGameTime: number;
     isRunning: boolean;
-    challengeStatus: ChallengeStatus[];
+    unreadCount: number;
     onCodeChange: (newCode: string) => void;
     onGenerateFinalCode: () => void;
     onPauseResume?: () => void;
     onReset?: () => void;
+    onToggleMessageHistory: () => void;
     formatTime: (totalSeconds: number) => string;
 }
 
@@ -26,15 +20,15 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
     timeRemaining,
     selectedGameTime,
     isRunning,
-    challengeStatus,
+    unreadCount,
     onCodeChange,
     onGenerateFinalCode,
     onPauseResume,
     onReset,
+    onToggleMessageHistory,
     formatTime,
 }) => {
     const timeElapsed = selectedGameTime - timeRemaining;
-    const areAllFixed = challengeStatus.every(c => c.isFixed);
 
     return (
         <div className={styles.gameContainer}>
@@ -44,6 +38,19 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                     <p className={styles.studentNo}>Time Elapsed: {formatTime(timeElapsed)}</p>
                 </div>
                 <div className={styles.timerControls}>
+                    <button 
+                        onClick={onToggleMessageHistory} 
+                        className={styles.messageIcon}
+                        title="View Messages"
+                    >
+                        <svg className={styles.messageIconSvg} fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        {unreadCount > 0 && (
+                            <span className={styles.notificationBadge}>{unreadCount}</span>
+                        )}
+                    </button>
                     <div className={styles.timer}>
                         Time Remaining: <span className={styles.timerValue}>{formatTime(timeRemaining)}</span>
                     </div>
@@ -68,7 +75,7 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                             onClick={onGenerateFinalCode}
                             className={`${styles.controlBtn} ${styles.endBtn}`}
                         >
-                            End Trial & Generate Code
+                            SUBMIT
                         </button>
                     </div>
                 </div>
@@ -93,24 +100,6 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                             srcDoc={userCode}
                             className={styles.iframe}
                         />
-                    </div>
-                    <div className={styles.statusPanel}>
-                        <h2 className={styles.statusTitle}>Challenge Status</h2>
-                        <ul className={styles.challengeList}>
-                            {challengeStatus.length === 0 ? (
-                                <li>Loading challenges...</li>
-                            ) : (
-                                challengeStatus.map((challenge, index) => (
-                                    <li key={index} className={challenge.isFixed ? styles.fixed : styles.unfixed}>
-                                        <span className={styles.challengeMessage}>{challenge.message}</span>
-                                        <span className={styles.fixStatus}>{challenge.isFixed ? 'FIXED' : 'UNFIXED'}</span>
-                                    </li>
-                                ))
-                            )}
-                        </ul>
-                        <p className={styles.finalStatus}>
-                            **Final Submission Status:** {areAllFixed ? 'READY TO SUBMIT' : 'ISSUES REMAIN'}
-                        </p>
                     </div>
                 </div>
             </div>

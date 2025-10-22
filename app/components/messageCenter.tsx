@@ -4,34 +4,23 @@ import { Message } from '../messages'; // Assuming 'messages.ts' is at the root
 
 interface MessageCenterProps {
     currentPopup: Message | null;
-    currentMessages: Message[];
     messageHistory: Message[];
-    unreadCount: number;
     showMessageHistory: boolean;
     formatMessageTime: (message: Message) => string;
     onClosePopup: () => void;
     onToggleHistory: () => void;
-    onMarkAllRead: () => void;
 }
 
 const MessageCenter: React.FC<MessageCenterProps> = ({
     currentPopup,
-    currentMessages,
     messageHistory,
-    unreadCount,
     showMessageHistory,
     formatMessageTime,
     onClosePopup,
-    onToggleHistory,
-    onMarkAllRead
+    onToggleHistory
 }) => {
     return (
         <div className={styles.messageCenter}>
-            {/* Message Icon */}
-            <button onClick={onToggleHistory} className={styles.messageIconBtn}>
-                Messages {unreadCount > 0 && <span className={styles.unreadCount}>{unreadCount}</span>}
-            </button>
-
             {/* Current Popup */}
             {currentPopup && (
                 <div className={styles.messagePopup}>
@@ -49,7 +38,6 @@ const MessageCenter: React.FC<MessageCenterProps> = ({
                 <div className={styles.messageHistoryPanel}>
                     <div className={styles.historyHeader}>
                         <h3>Message History</h3>
-                        <button onClick={onMarkAllRead} className={styles.markReadBtn}>Mark All Read</button>
                         <button onClick={onToggleHistory} className={styles.closeHistory}>X</button>
                     </div>
                     <div className={styles.historyList}>

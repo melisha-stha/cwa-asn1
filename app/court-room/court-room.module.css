@@ -15,12 +15,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: white; /* Changed from dark gradient to white */
-  backdrop-filter: none; /* Removed blur */
+  background: white;
+  /* Changed from dark gradient to white */
+  backdrop-filter: none;
+  /* Removed blur */
   -webkit-backdrop-filter: none;
-  border-radius: 8px; /* Simplified border radius */
-  box-shadow: none; /* Removed large shadows */
-  border: 1px solid #dee2e6; /* Simple, light border like in Tabs page elements */
+  border-radius: 8px;
+  /* Simplified border radius */
+  box-shadow: none;
+  /* Removed large shadows */
+  border: 1px solid #dee2e6;
+  /* Simple, light border like in Tabs page elements */
   position: relative;
   overflow: hidden;
 }
@@ -28,8 +33,10 @@
 /* Typography - revert to dark text on light background */
 .welcomeTitle {
   font-size: 1.5rem;
-  font-weight: 600; /* Made bolder like the Tabs Page 'Tabs Page' title */
-  color: #212529; /* Dark text color */
+  font-weight: 600;
+  /* Made bolder like the Tabs Page 'Tabs Page' title */
+  color: #212529;
+  /* Dark text color */
   margin-top: -3.5rem;
   margin-bottom: 1rem;
   letter-spacing: normal;
@@ -37,7 +44,7 @@
 
 .welcomeText {
   font-size: 1rem;
-  color: #6c757d; 
+  color: #6c757d;
   line-height: 1.6;
   margin-bottom: 3rem;
   max-width: 40rem;
@@ -66,10 +73,13 @@
   min-width: 140px;
   max-width: 160px;
   padding: 1rem 0.8rem;
-  background: #f8f9fa; /* Light background */
-  border: 1px solid #ced4da; /* Light border */
+  background: #f8f9fa;
+  /* Light background */
+  border: 1px solid #ced4da;
+  /* Light border */
   border-radius: 9px;
-  color: #495057; /* Darker text */
+  color: #495057;
+  /* Darker text */
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -83,17 +93,21 @@
 }
 
 .timeOptionBtn::before {
-  content: none; /* Remove hover effect overlay */
+  content: none;
+  /* Remove hover effect overlay */
 }
 
 .timeOptionBtn:hover {
-  transform: translateY(-1px); /* Reduced hover lift */
-  border-color: #007bff; /* Primary color hover border */
+  transform: translateY(-1px);
+  /* Reduced hover lift */
+  border-color: #007bff;
+  /* Primary color hover border */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .timeOptionBtn.selectedTime {
-  background: #007bff; /* Primary blue selected color (like Tab 1 active) */
+  background: #007bff;
+  /* Primary blue selected color (like Tab 1 active) */
   border-color: #007bff;
   color: white;
   transform: translateY(-1px);
@@ -119,20 +133,24 @@
 
 /* Specific button colors (retaining a simplified version of the color scheme) */
 .timeOptionBtn:nth-child(1).selectedTime {
-  background: #28a745; /* Green */
+  background: #28a745;
+  /* Green */
   border-color: #28a745;
   box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
 }
 
 .timeOptionBtn:nth-child(2).selectedTime {
-  background: #ffc107; /* Yellow/Orange */
+  background: #ffc107;
+  /* Yellow/Orange */
   border-color: #ffc107;
-  color: #212529; /* Dark text for light background */
+  color: #212529;
+  /* Dark text for light background */
   box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
 }
 
 .timeOptionBtn:nth-child(3).selectedTime {
-  background: #dc3545; /* Red */
+  background: #dc3545;
+  /* Red */
   border-color: #dc3545;
   box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
 }
@@ -140,7 +158,8 @@
 /* Start Button */
 .startBtn {
   padding: 1rem 2rem;
-  background: #28a745; /* Green from Tabs page success button/add tab */
+  background: #28a745;
+  /* Green from Tabs page success button/add tab */
   color: white;
   border: none;
   border-radius: 8px;
@@ -174,7 +193,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #f8f9fa; /* Light background */
+  background: #f8f9fa;
+  /* Light background */
   padding: 1rem;
 }
 
@@ -189,7 +209,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: white; /* White background */
+  background: white;
+  /* White background */
   border-radius: 8px;
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -227,10 +248,12 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #f8f9fa; /* Very light background */
+  background: #f8f9fa;
+  /* Very light background */
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: 1px solid #007bff; /* Primary blue border */
+  border: 1px solid #007bff;
+  /* Primary blue border */
   font-size: 0.9rem;
   color: #495057;
 }
@@ -250,7 +273,8 @@
 /* Control Buttons (e.g., Submit) */
 .controlBtn {
   padding: 0.5rem 1rem;
-  background: #007bff; /* Primary blue */
+  background: #007bff;
+  /* Primary blue */
   color: white;
   border: none;
   border-radius: 6px;
@@ -276,7 +300,8 @@
 }
 
 .submitBtn {
-  background: #28a745; /* Success green */
+  background: #28a745;
+  /* Success green */
 }
 
 .submitBtn:hover {
@@ -293,7 +318,8 @@
 
 .codeEditor,
 .previewPanel {
-  background: white; /* White panel backgrounds */
+  background: white;
+  /* White panel backgrounds */
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -312,15 +338,18 @@
   color: #212529;
   margin: 0 0 0.75rem 0;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #dee2e6; /* Light separator */
+  border-bottom: 1px solid #dee2e6;
+  /* Light separator */
 }
 
 /* Code Editor Area */
 .codeArea {
   width: 100%;
   min-height: 400px;
-  background: #f8f9fa; /* Very light background for the code area */
-  color: #212529; /* Dark text */
+  background: #f8f9fa;
+  /* Very light background for the code area */
+  color: #212529;
+  /* Dark text */
   border: 1px solid #ced4da;
   border-radius: 6px;
   padding: 1rem;
@@ -342,7 +371,8 @@
   border-radius: 6px;
   overflow: hidden;
   min-height: 200px;
-  border: 1px solid #ced4da; /* Add a light border to the preview iframe container */
+  border: 1px solid #ced4da;
+  /* Add a light border to the preview iframe container */
 }
 
 .iframe {
@@ -354,7 +384,8 @@
 
 /* Status Panel */
 .statusPanel {
-  background: #f8f9fa; /* Light grey background */
+  background: #f8f9fa;
+  /* Light grey background */
   border-radius: 6px;
   padding: 1rem;
   border: 1px solid #ced4da;
@@ -379,7 +410,8 @@
   align-items: center;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  background: #fff; /* White background */
+  background: #fff;
+  /* White background */
   border-radius: 6px;
   border-left: 4px solid transparent;
   transition: all 0.2s ease;
@@ -388,12 +420,14 @@
 
 .fixed {
   border-left-color: #28a745;
-  background: #d4edda; /* Light green background */
+  background: #d4edda;
+  /* Light green background */
 }
 
 .unfixed {
   border-left-color: #dc3545;
-  background: #f8d7da; /* Light red background */
+  background: #f8d7da;
+  /* Light red background */
 }
 
 .challengeMessage {
@@ -441,7 +475,8 @@
 }
 
 .messageIconBtn {
-  background: #007bff; /* Primary blue button */
+  background: #007bff;
+  /* Primary blue button */
   color: white;
   border: none;
   border-radius: 8px;
@@ -480,7 +515,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white; /* White background */
+  background: white;
+  /* White background */
   border: 1px solid #ced4da;
   border-radius: 12px;
   padding: 1.5rem;
@@ -549,7 +585,8 @@
   right: 2rem;
   width: 350px;
   max-height: 450px;
-  background: white; /* White background */
+  background: white;
+  /* White background */
   border: 1px solid #ced4da;
   border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -562,7 +599,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1.25rem;
-  background: #e9ecef; /* Light gray header background */
+  background: #e9ecef;
+  /* Light gray header background */
   border-bottom: 1px solid #ced4da;
 }
 
@@ -571,22 +609,6 @@
   font-size: 1rem;
   font-weight: 700;
   margin: 0;
-}
-
-.markReadBtn {
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.markReadBtn:hover {
-  background: #0056b3;
 }
 
 .closeHistory {
@@ -621,7 +643,8 @@
 .historyItem {
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  background: #f8f9fa; /* Very light background for items */
+  background: #f8f9fa;
+  /* Very light background for items */
   border-radius: 6px;
   border-left: 4px solid #adb5bd;
   transition: all 0.2s ease;
@@ -672,7 +695,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  background: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -684,7 +708,8 @@
 .gameOverBox,
 .winBox,
 .fixFirstBox {
-  background: white; /* White box background */
+  background: white;
+  /* White box background */
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
@@ -696,7 +721,8 @@
 }
 
 .penaltyBox {
-  background: #f8d7da; /* Light red for penalty box */
+  background: #f8d7da;
+  /* Light red for penalty box */
   border-color: #dc3545;
 }
 
@@ -709,7 +735,8 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
-  color: #495057; /* Darker headers */
+  color: #495057;
+  /* Darker headers */
 }
 
 .penaltyHeader {

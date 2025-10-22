@@ -286,9 +286,7 @@ const CourtRoomPage: React.FC = () => {
         setShowMessageHistory(prev => !prev);
     };
 
-    const handleMarkAllRead = () => {
-        setUnreadCount(0);
-    };
+
 
     const handleCloseFixFirstPopup = () => {
         setShowFixFirstPopup(false);
@@ -503,23 +501,21 @@ const CourtRoomPage: React.FC = () => {
                         timeRemaining={timeRemaining}
                         selectedGameTime={selectedGameTime}
                         isRunning={isRunning}
-                        challengeStatus={getChallengeStatus()}
+                        unreadCount={unreadCount}
                         onCodeChange={setUserCode}
                         onGenerateFinalCode={() => generateFinalCode(true)}
                         onPauseResume={handlePauseResume}
                         onReset={handleReset}
+                        onToggleMessageHistory={handleToggleHistory}
                         formatTime={formatTime}
                     />
                     <MessageCenter
                         currentPopup={currentPopup}
-                        currentMessages={currentMessages}
                         messageHistory={messageHistory}
-                        unreadCount={unreadCount}
                         showMessageHistory={showMessageHistory}
                         formatMessageTime={formatMessageTime}
                         onClosePopup={handleClosePopup}
                         onToggleHistory={handleToggleHistory}
-                        onMarkAllRead={handleMarkAllRead}
                     />
                 </div>
             )}
