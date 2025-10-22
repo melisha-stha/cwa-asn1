@@ -45,6 +45,15 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
     const challenges = getChallengeStatus();
     const resolvedChallenges = challenges.filter(c => c.isFixed).length;
 
+    const formatDifficulty = (difficulty: string) => {
+        switch (difficulty) {
+            case 'easy': return 'Easy';
+            case 'medium': return 'Medium';
+            case 'difficult': return 'Hard';
+            default: return difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+        }
+    };
+
     // --- Dramatic Penalty Screen ---
     if (penaltyScreen) {
         return (
@@ -83,7 +92,7 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
                         You failed to fix all bugs before the time ran out.
                     </p>
                     <ul className={styles.finalStats}>
-                        <li>Difficulty: {getCurrentDifficulty().slice(1)}</li>
+                        <li>Difficulty: {formatDifficulty(getCurrentDifficulty())}</li>
                         <li>Time Elapsed: {formatTime(timeTaken)}</li>
                         <li>Issues Fixed: {resolvedChallenges} / {challenges.length}</li>
                         <li>Total Penalties: {penalties.length}</li>
@@ -110,7 +119,7 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
                         <p>Your Final Results:</p>
                         <ul className={styles.finalStats}>
                             <li>Time Taken: {formatTime(timeTaken)}</li>
-                            <li>Difficulty: {getCurrentDifficulty().slice(1)}</li>
+                            <li>Difficulty: {formatDifficulty(getCurrentDifficulty())}</li>
                             <li>Issues resolved: {challenges.length} of {challenges.length}</li>
                             <li>{penalties.length === 0 ? 'No penalties incurred' : `Total Penalties: ${penalties.length}`}</li>
                         </ul>
@@ -118,9 +127,6 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
                     <div className={styles.popupActions}>
                         <button onClick={onResetGame} className={styles.controlBtn}>
                             Play New Game
-                        </button>
-                        <button onClick={onGenerateFinalCode} className={styles.popupOkBtn}>
-                            Generate Final Code
                         </button>
                     </div>
                 </div>
