@@ -1,4 +1,4 @@
-import { Message } from '../messages'; // Assuming 'messages.ts' is at the root or correctly linked
+import { Message } from '../app/messages';
 
 // --- Game Configuration Data ---
 

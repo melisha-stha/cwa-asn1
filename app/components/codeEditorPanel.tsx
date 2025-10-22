@@ -16,6 +16,8 @@ interface CodeEditorPanelProps {
     challengeStatus: ChallengeStatus[];
     onCodeChange: (newCode: string) => void;
     onGenerateFinalCode: () => void;
+    onPauseResume?: () => void;
+    onReset?: () => void;
     formatTime: (totalSeconds: number) => string;
 }
 
@@ -27,6 +29,8 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
     challengeStatus,
     onCodeChange,
     onGenerateFinalCode,
+    onPauseResume,
+    onReset,
     formatTime,
 }) => {
     const timeElapsed = selectedGameTime - timeRemaining;
@@ -43,13 +47,30 @@ const CodeEditorPanel: React.FC<CodeEditorPanelProps> = ({
                     <div className={styles.timer}>
                         Time Remaining: <span className={styles.timerValue}>{formatTime(timeRemaining)}</span>
                     </div>
-                    <button
-                        onClick={onGenerateFinalCode}
-                        disabled={!isRunning || !areAllFixed}
-                        className={`${styles.controlBtn} ${!isRunning || !areAllFixed ? styles.disabled : styles.submitBtn}`}
-                    >
-                        Submit Final Code
-                    </button>
+                    <div className={styles.controls}>
+                        {onPauseResume && (
+                            <button
+                                onClick={onPauseResume}
+                                className={styles.controlBtn}
+                            >
+                                {isRunning ? 'Pause' : 'Resume'}
+                            </button>
+                        )}
+                        {onReset && (
+                            <button
+                                onClick={onReset}
+                                className={styles.controlBtn}
+                            >
+                                Reset
+                            </button>
+                        )}
+                        <button
+                            onClick={onGenerateFinalCode}
+                            className={`${styles.controlBtn} ${styles.endBtn}`}
+                        >
+                            End Trial & Generate Code
+                        </button>
+                    </div>
                 </div>
             </div>
 

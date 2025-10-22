@@ -11,7 +11,7 @@ import GameOverlay from '../components/gameOverlay';
 
 type GameState = 'welcome' | 'playing' | 'game_over';
 
-export const formatTime = (totalSeconds: number) => {
+const formatTime = (totalSeconds: number) => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
@@ -294,6 +294,14 @@ const CourtRoomPage: React.FC = () => {
         setShowFixFirstPopup(false);
     };
 
+    const handlePauseResume = () => {
+        setIsRunning(!isRunning);
+    };
+
+    const handleReset = () => {
+        resetGame();
+    };
+
 
     useEffect(() => {
         let intervalId: NodeJS.Timeout | undefined = undefined;
@@ -414,6 +422,7 @@ const CourtRoomPage: React.FC = () => {
                 setPenaltyScreen(challenge.penaltyMessage);
                 setPenalties(prev => [...prev, challenge.penaltyKey]);
                 setIsRunning(false);
+                setGameState('game_over');
 
                 const penaltyMessage: Omit<Message, 'timestamp' | 'gameTime' | 'messageType' | 'priority'> = {
                     id: challenge.penaltyTime,
@@ -470,7 +479,7 @@ const CourtRoomPage: React.FC = () => {
                 selectedGameTime={selectedGameTime}
                 timeRemaining={timeRemaining}
                 penalties={penalties}
-                onClosePenalty={() => { setPenaltyScreen(null); setIsRunning(true); }}
+                onClosePenalty={() => { setPenaltyScreen(null); resetGame(); }}
                 onResetGame={() => { setShowWinPopup(false); resetGame(); }}
                 onGenerateFinalCode={() => generateFinalCode(false)}
                 getCurrentDifficulty={getCurrentDifficulty}
@@ -497,6 +506,8 @@ const CourtRoomPage: React.FC = () => {
                         challengeStatus={getChallengeStatus()}
                         onCodeChange={setUserCode}
                         onGenerateFinalCode={() => generateFinalCode(true)}
+                        onPauseResume={handlePauseResume}
+                        onReset={handleReset}
                         formatTime={formatTime}
                     />
                     <MessageCenter
